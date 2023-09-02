@@ -10,4 +10,27 @@
   <ItemGroup>
     <Compile Remove="Program.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="Server\" />
+    <None Remove="Shared\" />
+    <None Remove="Shared\Domain\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Server\" />
+    <Folder Include="Shared\" />
+    <Folder Include="Shared\Domain\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Server\Server.csproj" />
+    <ProjectReference Include="..\Shared\Shared.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MSTest.TestAdapter" Version="3.1.1" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.1.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
+    <PackageReference Include="coverlet.collector" Version="6.0.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
 </Project>

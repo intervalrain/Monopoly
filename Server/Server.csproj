@@ -10,4 +10,12 @@
   <ItemGroup>
     <Compile Remove="Program.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="Hubs\" />
+    <None Remove="Repositories\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Hubs\" />
+    <Folder Include="Repositories\" />
+  </ItemGroup>
 </Project>
