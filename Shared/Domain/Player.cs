@@ -1,11 +1,45 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
 namespace Shared.Domain
 {
-	public class Game
+	public class Player
 	{
-		public Game()
+		private List<LandContract> landContractList = new();
+		private int money;
+
+		public Player(string id)
 		{
+			Id = id;
 		}
+
+		public PlayerState State { get; private set; } = PlayerState.Normal;
+		public string Id { get; }
+		public int Moeny => money;
+
+		public void SetState(PlayerState playerState)
+		{
+			State = playerState;
+		}
+
+		public bool IsBankrupt()
+		{
+			return State == PlayerState.Bankrupt;
+		}
+
+		public void AddLandContract(LandContract landContract)
+		{
+			this.landContractList.Add(landContract);
+		}
+
+		public void AddMoney(int money)
+		{
+			this.money += money;
+		}
+
+		internal IList<LandContract> LandContractList => landContractList.AsReadOnly();
 	}
 }
 
