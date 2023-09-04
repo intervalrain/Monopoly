@@ -7,7 +7,7 @@ namespace Shared.Domain
 {
 	public class Player
 	{
-		private List<LandContract> landContractList = new();
+		private List<LandContract> landContracts = new();
 		private int money;
 
 		public Player(string id)
@@ -17,7 +17,7 @@ namespace Shared.Domain
 
 		public PlayerState State { get; private set; } = PlayerState.Normal;
 		public string Id { get; }
-		public int Moeny => money;
+		public int Money => money;
 
 		public void SetState(PlayerState playerState)
 		{
@@ -31,7 +31,7 @@ namespace Shared.Domain
 
 		public void AddLandContract(LandContract landContract)
 		{
-			this.landContractList.Add(landContract);
+			this.landContracts.Add(landContract);
 		}
 
 		public void AddMoney(int money)
@@ -39,7 +39,7 @@ namespace Shared.Domain
 			this.money += money;
 		}
 
-		internal IList<LandContract> LandContractList => landContractList.AsReadOnly();
+		internal IList<LandContract> LandContractList => landContracts.AsReadOnly();
 	}
 }
 

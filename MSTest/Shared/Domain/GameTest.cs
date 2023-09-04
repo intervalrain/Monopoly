@@ -17,27 +17,25 @@ namespace Test.Shared.Domain
 			 *  The settlement is ranked as ACB
 			 */
 			Game game = new();
-			string id_a = "A";
-			string id_b = "B";
-			string id_c = "C";
+			Player? playerA = new("A");
+            Player? playerB = new("B");
+            Player? playerC = new("C");
+            
+			game.AddPlayer(playerA);
+			game.AddPlayer(playerB);
+			game.AddPlayer(playerC);
 
-			game.AddPlayer(id_a);
-			game.AddPlayer(id_b);
-			game.AddPlayer(id_c);
-
-			game.SetState(id_b, PlayerState.Bankrupt);
-            game.SetState(id_c, PlayerState.Bankrupt);
-
+			game.SetState(playerB, PlayerState.Bankrupt);
+            game.SetState(playerC, PlayerState.Bankrupt);
+            
 			game.Settlement();
 
-			Player? playerA = game.FindPlayerById(id_a);
-            Player? playerB = game.FindPlayerById(id_b);
-            Player? playerC = game.FindPlayerById(id_c);
             Assert.AreEqual(1, game.RankList[playerA]);
             Assert.AreEqual(3, game.RankList[playerB]);
             Assert.AreEqual(2, game.RankList[playerC]);
 
         }
+
 		[TestMethod]
 		public void SettlementTest2()
 		{
@@ -50,33 +48,29 @@ namespace Test.Shared.Domain
 			 *  Rank is A,B,C,D
 			 */
 			Game game = new();
-			string id_a = "A";
-			string id_b = "B";
-			string id_c = "C";
-			string id_d = "D";
+			Player? playerA = new("A");
+            Player? playerB = new("B");
+            Player? playerC = new("C");
+            Player? playerD = new("D");
+           
+			game.AddPlayer(playerA);
+			game.AddPlayer(playerB);
+			game.AddPlayer(playerC);
+			game.AddPlayer(playerD);
 
-			game.AddPlayer(id_a);
-			game.AddPlayer(id_b);
-			game.AddPlayer(id_c);
-			game.AddPlayer(id_d);
-
-			var playerA = game.FindPlayerById(id_a);
 			var landContractA1 = new LandContract(2000, playerA);
 			landContractA1.Upgrade();
 			playerA?.AddLandContract(landContractA1);
 			playerA?.AddMoney(1000);
 
-			var playerB = game.FindPlayerById(id_b);
 			var landContractB1 = new LandContract(2000, playerB);
 			landContractB1.Upgrade();
 			playerB?.AddLandContract(landContractB1);
 
-			var playerC = game.FindPlayerById(id_c);
 			var landContractC1 = new LandContract(2000, playerC);
 			playerC?.AddLandContract(landContractC1);
 			playerC?.AddMoney(1000);
 
-			var playerD = game.FindPlayerById(id_d);
 			var landContractD1 = new LandContract(2000, playerD);
 			playerD?.AddLandContract(landContractD1);
 

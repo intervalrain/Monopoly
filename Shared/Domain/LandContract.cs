@@ -5,22 +5,22 @@ namespace Shared.Domain
 	{
 		private int price;
 		private Player? owner;
-		private int houseCount;
+		private int level;
 
 		public LandContract(int price, Player? owner)
 		{
 			this.price = price;
 			this.owner = owner;
-			this.houseCount = 0;
+			this.level = 0;
 		}
 
 		public int Price => price;
 
-		public int House => houseCount;
+		public int Level => level;
 
 		public void Upgrade()
 		{
-			this.houseCount++;
+			this.level++;
 		}
 	}
 }
