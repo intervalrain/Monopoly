@@ -7,10 +7,10 @@ using Shared.Domain;
 namespace Test.Shared.Domain
 {
 	[TestClass]
-	public class GameTest
+	public class SettlementTest
 	{
 		[TestMethod]
-		public void SettlementTest()
+		public void BankruptTest()
 		{
 			/** 
 			 *  B is bankrupt and then C is bankrupt,
@@ -37,7 +37,7 @@ namespace Test.Shared.Domain
         }
 
 		[TestMethod]
-		public void SettlementTest2()
+		public void RankTest()
 		{
 			/**
 			 * Players ABCD, game end with 

@@ -10,23 +10,19 @@ namespace Shared.Domain
 		private List<LandContract> landContracts = new();
 		private int money;
 
-		public Player(string id)
+        public PlayerState State { get; private set; } = PlayerState.Normal;
+        public string Id { get; }
+        public int Money => money;
+		public Direction.Enumerates Direction { get; set; }
+
+        public Player(string id)
 		{
 			Id = id;
 		}
 
-		public PlayerState State { get; private set; } = PlayerState.Normal;
-		public string Id { get; }
-		public int Money => money;
-
 		public void SetState(PlayerState playerState)
 		{
 			State = playerState;
-		}
-
-		public bool IsBankrupt()
-		{
-			return State == PlayerState.Bankrupt;
 		}
 
 		public void AddLandContract(LandContract landContract)

@@ -7,11 +7,16 @@ namespace Shared.Domain
 {
 	public class Game
 	{
-		private List<Player> players = new();
+        private readonly List<Player> players = new();
+        public Map Map { get; }
+        public Dictionary<Player, int> RankList { get; set; } = new();
 
-		public Dictionary<Player, int> RankList { get; set; } = new();
+        public Game(Map? initMap = null)
+		{
+			Map = initMap ?? new Map(Array.Empty<IBlock[]>());
+		}
 
-		public void AddPlayer(Player player)
+        public void AddPlayer(Player player)
 		{
 			players.Add(player);
         }
@@ -26,7 +31,7 @@ namespace Shared.Domain
         public void Settlement()
 		{
 			var playerList = from p in players
-							 where !p.IsBankrupt()
+							 where p.State != PlayerState.Bankrupt
 							 orderby p.Money + p.LandContractList.Sum(l => l.Price + (l.Level * l.Price)) ascending
 							 select p;
 			foreach (var player in playerList)
