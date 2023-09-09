@@ -14,13 +14,12 @@ namespace Test.Shared.Domain
             Player playerA = new("A");
             game.AddPlayer(playerA);
 
-            game.Map.SetPosition(playerA, "F4");
-            playerA.Direction = Direction.Enumerates.Up;
+            game.SetPlayerToBlock(playerA, "F4", Direction.Enumerates.Up);
+            
+            int point = 6;
+            game.MovePlayer(playerA, point);
 
-            var point = 6;
-            game.Map.Move(playerA, point);
-
-            Assert.AreEqual("A4", game.Map.GetPosition(playerA).Id);
+            Assert.AreEqual("A4", game.GetPlayerPosition(playerA));
 		}
 
         /**
@@ -34,15 +33,15 @@ namespace Test.Shared.Domain
          */
 
 
-        IBlock[][] _7x7Map => new IBlock[][]
+        IBlock?[][] _7x7Map => new IBlock?[][]
         {
-            new IBlock[] { new Block("Start"),    new Block("A1"), new Block("Station1"), new Block("A2"), new Block("A3"),         null,            null },
-            new IBlock[] { new Block("F4"),       null,            null,                  null,            new Block("A4"),         null,            null },
-            new IBlock[] { new Block("Station4"), null,            new Block("B5"),       new Block("B6"), new Block("ParkingLot"), new Block("C1"), new Block("C2") },
-            new IBlock[] { new Block("F3"),       null,            new Block("B4"),       null,            new Block("B1"),         null,            new Block("C3") },
-            new IBlock[] { new Block("F2"),       new Block("F1"), new Block("Prison"),   new Block("B3"), new Block("B2"),         null,            new Block("Station2") },
-            new IBlock[] { null,                  null,            new Block("E3"),       null,            null,                    null,            new Block("D1") },
-            new IBlock[] { null,                  null,            new Block("E2"),       new Block("E1"), new Block("Station3"),   new Block("D3"), new Block("D2") }
+            new IBlock?[] { new Block("Start"),    new Block("A1"), new Block("Station1"), new Block("A2"), new Block("A3"),         null,            null },
+            new IBlock?[] { new Block("F4"),       null,            null,                  null,            new Block("A4"),         null,            null },
+            new IBlock?[] { new Block("Station4"), null,            new Block("B5"),       new Block("B6"), new Block("ParkingLot"), new Block("C1"), new Block("C2") },
+            new IBlock?[] { new Block("F3"),       null,            new Block("B4"),       null,            new Block("B1"),         null,            new Block("C3") },
+            new IBlock?[] { new Block("F2"),       new Block("F1"), new Block("Prison"),   new Block("B3"), new Block("B2"),         null,            new Block("Station2") },
+            new IBlock?[] { null,                  null,            new Block("E3"),       null,            null,                    null,            new Block("D1") },
+            new IBlock?[] { null,                  null,            new Block("E2"),       new Block("E1"), new Block("Station3"),   new Block("D3"), new Block("D2") }
         };
         
     }

@@ -7,32 +7,33 @@ namespace Shared.Domain
 {
 	public class Game
 	{
-        private readonly List<Player> players = new();
-        public Map Map { get; }
-        public Dictionary<Player, int> RankList { get; set; } = new();
+        private readonly Map _map;
+        private readonly List<Player> _players = new();
+        private readonly Dictionary<Player, int> _rankMap = new();
+
+		public IDictionary<Player, int> RankMap => _rankMap.AsReadOnly();
 
         public Game(Map? initMap = null)
 		{
-			Map = initMap ?? new Map(Array.Empty<IBlock[]>());
+			_map = initMap ?? new Map(Array.Empty<IBlock[]>());
 		}
 
-        public void AddPlayer(Player player)
-		{
-			players.Add(player);
-        }
+		public void AddPlayer(Player player) => _players.Add(player);
 
-        public void SetState(Player? player, PlayerState state)
+        public void SetState(Player player, PlayerState state)
         {
-			if (player == null) return;
-			AddPlayerToRankList(player);
-			player.SetState(state);
+            player.SetState(state);
+			if (state == PlayerState.Bankrupt)
+			{
+                AddPlayerToRankList(player);
+            }
         }
 
         public void Settlement()
 		{
-			var playerList = from p in players
+			var playerList = from p in _players
 							 where p.State != PlayerState.Bankrupt
-							 orderby p.Money + p.LandContractList.Sum(l => l.Price + (l.Level * l.Price)) ascending
+							 orderby p.Money + p.LandContractList.Sum(l => l.Value) ascending
 							 select p;
 			foreach (var player in playerList)
 			{
@@ -40,13 +41,19 @@ namespace Shared.Domain
 			}
 		}
 
-		private void AddPlayerToRankList(Player player)
+        public void SetPlayerToBlock(Player player, string blockId, Direction.Enumerates direction) => _map.SetPosition(player, blockId, direction);
+
+        public void MovePlayer(Player player, int point) => _map.MovePlayer(player, point);
+
+        public string GetPlayerPosition(Player player) => _map.GetPlayerPositionedBlockId(player);
+
+        private void AddPlayerToRankList(Player player)
 		{
-			foreach(var rank in RankList)
+			foreach(var rank in _rankMap)
 			{
-				RankList[rank.Key] += 1;
+				_rankMap[rank.Key] += 1;
 			}
-			RankList.Add(player, 1);
+			_rankMap.Add(player, 1);
 		}
 	}
 }

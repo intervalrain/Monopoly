@@ -3,10 +3,10 @@ namespace Shared.Domain
 {
 	public class Map
 	{
-		private readonly Dictionary<string, IBlock> BlockMap = new(); 
-		private readonly Dictionary<Player, IBlock> playerPosition = new();
+		private readonly Dictionary<string, IBlock> _blockMap = new(); 
+		private readonly Dictionary<Player, IBlock> _playerPosition = new();
 
-		public Map(IBlock[][] blocks)
+		public Map(IBlock?[][] blocks)
 		{
             int[][] dirc = Direction.Array;
             
@@ -14,10 +14,10 @@ namespace Shared.Domain
             {
                 for (int j = 0; j < blocks[0].Length; j++)
                 {
-                    IBlock block = blocks[i][j]; 
+                    IBlock? block = blocks[i][j]; 
                     if (block != null)
                     {
-                        BlockMap[block.Id] = block;
+                        _blockMap[block.Id] = block;
 
                         int ix = i + dirc[0][0];
                         int jx = j + dirc[0][1];
@@ -51,24 +51,31 @@ namespace Shared.Domain
             }
 		}
 
-        public void SetPosition(Player playerA, string blockId)
+        public IBlock? GetBlockById(string blockId)
         {
-            BlockMap.TryGetValue(blockId, out IBlock? block);
-            if (block != null)
-            {
-                SetPosition(playerA, block);
-            }    
-        }
-        public void SetPosition(Player playerA, IBlock block)
-        {
-            playerPosition[playerA] = block;
+            _blockMap.TryGetValue(blockId, out IBlock? block);
+            return block;
         }
 
-        public void Move(Player player, int point)
+        public void SetPosition(Player player, string blockId, Direction.Enumerates direction)
+        {
+            IBlock? block = GetBlockById(blockId);
+            if (block == null) return;
+            SetPosition(player, block);
+            player.Direction = direction;
+        }
+
+        private void SetPosition(Player player, IBlock? block)
+        {
+            if (block == null) return;
+            _playerPosition[player] = block;
+        }
+
+        public void MovePlayer(Player player, int point)
         {
             if (point == 0) return;
             Direction.Enumerates direction = player.Direction;
-            IBlock? currBlock = GetPosition(player);
+            IBlock? currBlock = GetPlayerPositionedBlock(player);
             IEnumerable<IBlock?> nextBlocks;
             
             switch (direction)
@@ -99,12 +106,17 @@ namespace Shared.Domain
             }
             player.Direction = nextDirection;
 
-            Move(player, point - 1);
+            MovePlayer(player, point - 1);
         }
 
-        public IBlock GetPosition(Player player)
+        private IBlock GetPlayerPositionedBlock(Player player)
         {
-            return playerPosition[player];
+            return _playerPosition[player];
+        }
+
+        public string GetPlayerPositionedBlockId(Player player)
+        {
+            return GetPlayerPositionedBlock(player).Id;
         }
 
         public Direction.Enumerates GetDirection(IBlock? curr, IBlock? next)
