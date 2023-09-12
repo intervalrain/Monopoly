@@ -10,13 +10,9 @@ namespace Test.Shared.Domain
 		public void TransactionTest1()
 		{
 			// player a sell A1 to system.
-			Player a = new("A");
-			Player b = new("B");
-			Player c = new("C");
-
-			a.AddMoney(1000);
-			b.AddMoney(2000);
-			c.AddMoney(3000);
+			Player a = new("A", 1000);
+			Player b = new("B", 2000);
+			Player c = new("C", 3000);
 
 			a.AddLandContract(new(1000, "A1"));
 			var landContract = a.SellLandContract("A1");
@@ -32,13 +28,9 @@ namespace Test.Shared.Domain
 		public void TransactionTest2()
 		{
 			// player a sell A1 to b with $600.
-			Player a = new("A");
-			Player b = new("B");
-			Player c = new("C");
-
-			a.AddMoney(1000);
-			b.AddMoney(2000);
-			c.AddMoney(3000);
+			Player a = new("A", 1000);
+			Player b = new("B", 2000);
+			Player c = new("C", 3000);
 
 			a.AddLandContract(new(1000, "A1"));
 			var landContract = a.SellLandContract("A1");
@@ -56,13 +48,9 @@ namespace Test.Shared.Domain
 		public void TransactionTest3()
 		{
 			// player a sell A1, b has outcry with $3000, but b has not enough money so that fail to outcry
-			Player a = new("A");
-			Player b = new("B");
-			Player c = new("C");
-
-			a.AddMoney(1000);
-			b.AddMoney(2000);
-			c.AddMoney(3000);
+			Player a = new("A", 1000);
+			Player b = new("B", 2000);
+			Player c = new("C", 3000);
 
 			a.AddLandContract(new(1000, "A1"));
 			var landContract = a.SellLandContract("A1");

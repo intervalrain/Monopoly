@@ -20,7 +20,9 @@ namespace Shared.Domain
 
 		public void AddPlayer(Player player) => _players.Add(player);
 
-        public void SetState(Player player, PlayerState state)
+        public void AddPlayers(params Player[] players) => _players.AddRange(players);
+
+        public void SetPlayerState(Player player, PlayerState state)
         {
             player.SetState(state);
 			if (state == PlayerState.Bankrupt)
@@ -55,6 +57,22 @@ namespace Shared.Domain
 			}
 			_rankMap.Add(player, 1);
 		}
-	}
+
+        public void UpdatePlayerState(Player player)
+        {
+            if (player.Money == 0 && player.LandContractList.Count == 0)
+			{
+				SetPlayerState(player, PlayerState.Bankrupt);
+			}
+        }
+
+        public void Initial()
+        {
+            foreach (Player player in _players)
+			{
+				SetPlayerToBlock(player, "Start", Direction.GetRandom());
+            }
+        }
+    }
 }
 

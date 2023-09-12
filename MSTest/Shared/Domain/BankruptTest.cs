@@ -9,8 +9,11 @@ namespace Test.Shared.Domain
 		[TestMethod]
 		public void LackOfHouseAndMoney()
 		{
-			Player playerA = new("A");
-			playerA.SetState(PlayerState.Bankrupt);
+			// if a player lack of both money and house, set the player's state bankrupt
+			Player playerA = new("A", 0);
+			var game = new Game();
+
+			game.UpdatePlayerState(playerA);
 
 			Assert.AreEqual(playerA.State, PlayerState.Bankrupt);
 		}

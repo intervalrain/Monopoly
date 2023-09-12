@@ -17,22 +17,20 @@ namespace Test.Shared.Domain
 			 *  The settlement is ranked as ACB
 			 */
 			Game game = new();
-			Player? playerA = new("A");
-            Player? playerB = new("B");
-            Player? playerC = new("C");
-            
-			game.AddPlayer(playerA);
-			game.AddPlayer(playerB);
-			game.AddPlayer(playerC);
+			Player a = new("A");
+            Player b = new("B", 0);
+            Player c = new("C", 0);
 
-			game.SetState(playerB, PlayerState.Bankrupt);
-            game.SetState(playerC, PlayerState.Bankrupt);
+			game.AddPlayers(a, b, c);
+
+			game.UpdatePlayerState(b);
+			game.UpdatePlayerState(c);
             
 			game.Settlement();
 
-            Assert.AreEqual(1, game.RankMap[playerA]);
-            Assert.AreEqual(3, game.RankMap[playerB]);
-            Assert.AreEqual(2, game.RankMap[playerC]);
+            Assert.AreEqual(1, game.RankMap[a]);
+            Assert.AreEqual(3, game.RankMap[b]);
+            Assert.AreEqual(2, game.RankMap[c]);
 
         }
 
@@ -48,40 +46,37 @@ namespace Test.Shared.Domain
 			 *  Rank is A,B,C,D
 			 */
 			Game game = new();
-			Player playerA = new("A");
-            Player playerB = new("B");
-            Player playerC = new("C");
-            Player playerD = new("D");
-           
-			game.AddPlayer(playerA);
-			game.AddPlayer(playerB);
-			game.AddPlayer(playerC);
-			game.AddPlayer(playerD);
+			Player a = new("A");
+            Player b = new("B");
+            Player c = new("C");
+            Player d = new("D");
+
+			game.AddPlayers(a, b, c, d);
 
 			var landContractA1 = new LandContract(2000, "A1");
 			landContractA1.Upgrade();
-			playerA.AddLandContract(landContractA1);
-			playerA.AddMoney(1000);
+			a.AddLandContract(landContractA1);
+			a.AddMoney(1000);
 
 			var landContractB1 = new LandContract(2000, "B1");
 			landContractB1.Upgrade();
-			playerB.AddLandContract(landContractB1);
+			b.AddLandContract(landContractB1);
 
 			var landContractC1 = new LandContract(2000, "C1");
-			playerC.AddLandContract(landContractC1);
-			playerC.AddMoney(1000);
+			c.AddLandContract(landContractC1);
+			c.AddMoney(1000);
 
 			var landContractD1 = new LandContract(2000, "D1");
-			playerD.AddLandContract(landContractD1);
+			d.AddLandContract(landContractD1);
 
 			game.Settlement();
 
 			var ranking = game.RankMap;
 
-			Assert.AreEqual(1, ranking[playerA]);
-            Assert.AreEqual(2, ranking[playerB]);
-            Assert.AreEqual(3, ranking[playerC]);
-            Assert.AreEqual(4, ranking[playerD]);
+			Assert.AreEqual(1, ranking[a]);
+            Assert.AreEqual(2, ranking[b]);
+            Assert.AreEqual(3, ranking[c]);
+            Assert.AreEqual(4, ranking[d]);
         }
 	}
 }

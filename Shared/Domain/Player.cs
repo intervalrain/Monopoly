@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Shared;
 
 namespace Shared.Domain
 {
@@ -15,9 +16,10 @@ namespace Shared.Domain
         public int Money => _money;
 		public Direction.Enumerates Direction { get; set; }
 
-        public Player(string id)
+        public Player(string id, int money = Resource.DEFAULT_START_MONEY)
 		{
 			Id = id;
+			_money = money;
 		}
 
 		public void SetState(PlayerState playerState)
