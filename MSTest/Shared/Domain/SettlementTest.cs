@@ -16,7 +16,7 @@ namespace Test.Shared.Domain
 			 *  B is bankrupt and then C is bankrupt,
 			 *  The settlement is ranked as ACB
 			 */
-			Game game = new();
+			Game game = new("Test");
 			Player a = new("A");
             Player b = new("B", 0);
             Player c = new("C", 0);
@@ -45,7 +45,7 @@ namespace Test.Shared.Domain
 			 *  D with money = 2000
 			 *  Rank is A,B,C,D
 			 */
-			Game game = new();
+			Game game = new("Test");
 			Player a = new("A");
             Player b = new("B");
             Player c = new("C");

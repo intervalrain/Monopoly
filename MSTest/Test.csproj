@@ -22,8 +22,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Shared\" />
+    <None Remove="Shared\Usecases\" />
+    <None Remove="Shared\Repositories\" />
+    <None Remove="Shared\Utils\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Shared\" />
+    <Folder Include="Shared\Usecases\" />
+    <Folder Include="Shared\Repositories\" />
+    <Folder Include="Shared\Utils\" />
   </ItemGroup>
 </Project>

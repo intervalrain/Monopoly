@@ -9,8 +9,12 @@
 
   <ItemGroup>
     <None Remove="Domain\" />
+    <None Remove="Repositories\" />
+    <None Remove="Usecases\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Domain\" />
+    <Folder Include="Repositories\" />
+    <Folder Include="Usecases\" />
   </ItemGroup>
 </Project>

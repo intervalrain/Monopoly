@@ -11,7 +11,7 @@ namespace Test.Shared.Domain
 		{
 			// if a player lack of both money and house, set the player's state bankrupt
 			Player playerA = new("A", 0);
-			var game = new Game();
+			var game = new Game("Test");
 
 			game.UpdatePlayerState(playerA);
 
