@@ -12,17 +12,21 @@ namespace Shared.Domain
         private readonly List<Player> _players = new();
         private readonly Dictionary<Player, int> _rankMap = new();
         private string _id;
+        private DiceSetting _diceSetting = new DiceSetting();
 
         public IDictionary<Player, int> RankMap => _rankMap.AsReadOnly();
         public int CurrentDice { get; set; }
-        public Player? CurrentPlayer { get; set; }
+        //public Player? CurrentPlayer { get; set; }
+        public string CurrentPlayerId { get; set; }
         public string Id => _id;
         public List<Player> Players => _players;
+        public DiceSetting DiceSetting => _diceSetting; 
 
-        public Game(string id, Map? initMap = null)
+        public Game(string id, Map? initMap = null, DiceSetting? diceSetting = null)
         {
             _id = id;
-            _map = initMap ?? new Map(Array.Empty<IBlock[]>());
+            _map = initMap ?? new Map(Array.Empty<Block[]>());
+            _diceSetting = diceSetting ?? new DiceSetting();
         }
 
         public void AddPlayer(Player player) => _players.Add(player);
@@ -50,7 +54,7 @@ namespace Shared.Domain
             }
         }
 
-        public void SetPlayerToBlock(Player player, string blockId, Direction.Enumerates direction) => _map.SetPosition(player, blockId, direction);
+        public void SetPlayerToBlock(Player player, string blockId, Direction direction) => _map.SetPosition(player, blockId, direction);
 
         public void MovePlayer(Player player, int point) => _map.MovePlayer(player, point);
 
@@ -79,19 +83,20 @@ namespace Shared.Domain
         {
             foreach (Player player in _players)
             {
-                SetPlayerToBlock(player, "Start", Direction.GetRandom());
+                Direction d = (Direction)(new Random().Next(4));
+                SetPlayerToBlock(player, "Start", d);
             }
-            CurrentPlayer = _players.First();
+            CurrentPlayerId = _players.First().Id;
         }
 
-        public void SelectionDirection(Player player, Direction.Enumerates direction)
+        public void SelectionDirection(Player player, Direction direction)
         {
             player.Direction = direction;
         }
 
-        public Direction.Enumerates GetPlayerDirection(Player player) => player.Direction;
+        public Direction GetPlayerDirection(Player player) => player.Direction;
 
-        public Direction.Enumerates GetPlayerDirection(string playerId) => FindPlayerById(playerId).Direction;
+        public Direction GetPlayerDirection(string playerId) => FindPlayerById(playerId).Direction;
 
         public Player FindPlayerById(string playerId)
         {
@@ -100,19 +105,23 @@ namespace Shared.Domain
             return player;
         }
 
-        internal void PlayerMoveChess(string playerId)
+        public void PlayerMoveChess(string playerId)
         {
             Player player = FindPlayerById(playerId);
-            CurrentPlayer = player;
-            MovePlayer(CurrentPlayer, CurrentDice);
+            CurrentPlayerId = player.Id;
+            MovePlayer(player, CurrentDice);
 
         }
 
-        internal void PlayerRollDice(string playerId)
+        public void PlayerRollDice(string playerId)
         {
             Player player = FindPlayerById(playerId);
-            CurrentPlayer = player;
-            int dice = new Random().Next(6) + 1;
+            CurrentPlayerId = player.Id;
+            int dice = 0;
+            for (int i = 0; i < _diceSetting.NumberOfDice; i++)
+            {
+                dice += new Random().Next(_diceSetting.Min, _diceSetting.Max);
+            }
             CurrentDice = dice;
         }
     }

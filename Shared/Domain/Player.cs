@@ -14,7 +14,7 @@ namespace Shared.Domain
         public PlayerState State { get; private set; } = PlayerState.Normal;
         public string Id { get; }
         public int Money => _money;
-		public Direction.Enumerates Direction { get; set; }
+		public Direction Direction { get; set; }
 
         public Player(string id, int money = Resource.DEFAULT_START_MONEY)
 		{

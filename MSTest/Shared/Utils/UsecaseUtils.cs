@@ -5,10 +5,15 @@ namespace Test.Shared.Utils
 {
 	public class UsecaseUtils
 	{
-        public static void GameSetup(string gameId, params string[] playerIds)
+        public static Game GameSetup(string gameId, params string[] playerIds)
         {
-            Map map = new(MapLibrary._7x7Map);
-            Game game = new(gameId, map);
+            return GameSetup(gameId, null, playerIds);
+        }
+
+        public static Game GameSetup(string gameId, DiceSetting diceSetting = null, params string[] playerIds)
+        {
+            Map map = new(Utils._7x7Map);
+            Game game = new(gameId, map, diceSetting);
             int n = playerIds.Length;
             Player[] players = playerIds.Select(p => new Player(p)).ToArray();
             Player a = new("A");
@@ -21,6 +26,7 @@ namespace Test.Shared.Utils
 
             var gameRepository = new JsonRepository();
             gameRepository.Save(game);
+            return game;
         }
 
         public static Game GetGameById(string id)

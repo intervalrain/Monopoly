@@ -3,18 +3,24 @@ namespace Shared.Domain
 {
 	public class Map
 	{
-		private readonly Dictionary<string, IBlock> _blockMap = new(); 
-		private readonly Dictionary<Player, IBlock> _playerPosition = new();
+		private readonly Dictionary<string, Block> _blockMap = new(); 
+		private readonly Dictionary<Player, Block> _playerPosition = new();
 
-		public Map(IBlock?[][] blocks)
+		public Map(Block?[][] blocks)
 		{
-            int[][] dirc = Direction.Array;
+            int[][] dirc = new int[][]
+            {
+                new int[]{ -1, 0 },
+                new int[]{ 1, 0 },
+                new int[]{ 0, -1 },
+                new int[]{ 0, 1 }
+            };
             
             for (int i = 0; i < blocks.Length; i++)
             {
                 for (int j = 0; j < blocks[0].Length; j++)
                 {
-                    IBlock? block = blocks[i][j]; 
+                    Block? block = blocks[i][j]; 
                     if (block != null)
                     {
                         _blockMap[block.Id] = block;
@@ -51,21 +57,21 @@ namespace Shared.Domain
             }
 		}
 
-        public IBlock? GetBlockById(string blockId)
+        public Block? GetBlockById(string blockId)
         {
-            _blockMap.TryGetValue(blockId, out IBlock? block);
+            _blockMap.TryGetValue(blockId, out Block? block);
             return block;
         }
 
-        public void SetPosition(Player player, string blockId, Direction.Enumerates direction)
+        public void SetPosition(Player player, string blockId, Direction direction)
         {
-            IBlock? block = GetBlockById(blockId);
+            Block? block = GetBlockById(blockId);
             if (block == null) return;
             SetPosition(player, block);
             player.Direction = direction;
         }
 
-        private void SetPosition(Player player, IBlock? block)
+        private void SetPosition(Player player, Block? block)
         {
             if (block == null) return;
             _playerPosition[player] = block;
@@ -74,22 +80,22 @@ namespace Shared.Domain
         public void MovePlayer(Player player, int point)
         {
             if (point == 0) return;
-            Direction.Enumerates direction = player.Direction;
-            IBlock? currBlock = GetPlayerPositionedBlock(player);
-            IEnumerable<IBlock?> nextBlocks;
+            Direction direction = player.Direction;
+            Block? currBlock = GetPlayerPositionedBlock(player);
+            IEnumerable<Block?> nextBlocks;
             
             switch (direction)
             {
-                case Direction.Enumerates.Up:
+                case Direction.Up:
                     nextBlocks = new[] { currBlock.Up, currBlock.Left, currBlock.Right }.Where(x => x != null);
                     break;
-                case Direction.Enumerates.Down:
+                case Direction.Down:
                     nextBlocks = new[] { currBlock.Down, currBlock.Right, currBlock.Left }.Where(x => x != null);
                     break;
-                case Direction.Enumerates.Left:
+                case Direction.Left:
                     nextBlocks = new[] { currBlock.Left, currBlock.Down, currBlock.Up }.Where(x => x != null);
                     break;
-                case Direction.Enumerates.Right:
+                case Direction.Right:
                     nextBlocks = new[] { currBlock.Right, currBlock.Up, currBlock.Down }.Where(x => x != null);
                     break;
                 default:
@@ -98,8 +104,8 @@ namespace Shared.Domain
 
             Random random = new Random();
             int rand = random.Next() % nextBlocks.Count();
-            IBlock? nextBlock = nextBlocks.ToArray()[rand];
-            Direction.Enumerates nextDirection = GetDirection(currBlock, nextBlock);
+            Block? nextBlock = nextBlocks.ToArray()[rand];
+            Direction nextDirection = GetDirection(currBlock, nextBlock);
             if (nextBlock != null)
             {
                 SetPosition(player, nextBlock);
@@ -109,7 +115,7 @@ namespace Shared.Domain
             MovePlayer(player, point - 1);
         }
 
-        private IBlock GetPlayerPositionedBlock(Player player)
+        private Block GetPlayerPositionedBlock(Player player)
         {
             return _playerPosition[player];
         }
@@ -119,13 +125,25 @@ namespace Shared.Domain
             return GetPlayerPositionedBlock(player).Id;
         }
 
-        public Direction.Enumerates GetDirection(IBlock? curr, IBlock? next)
+        public Direction GetDirection(Block? curr, Block? next)
         {
-            if (next == curr.Up) return Direction.Enumerates.Up;
-            else if (next == curr.Down) return Direction.Enumerates.Down;
-            else if (next == curr.Left) return Direction.Enumerates.Left;
-            else if (next == curr.Right) return Direction.Enumerates.Right;
+            if (next == curr.Up) return Direction.Up;
+            else if (next == curr.Down) return Direction.Down;
+            else if (next == curr.Left) return Direction.Left;
+            else if (next == curr.Right) return Direction.Right;
             throw new ArgumentOutOfRangeException(curr.Id);
+        }
+
+        public static Direction Opposite(Direction direction)
+        {
+            return direction switch
+            {
+                Direction.Up => Direction.Down,
+                Direction.Down => Direction.Up,
+                Direction.Left => Direction.Right,
+                Direction.Right => Direction.Left,
+                _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
+            };
         }
     }
 }

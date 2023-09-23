@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using Shared.Domain;
 using Shared.Repositories;
+using static Shared.Domain.Map;
 
 namespace Test.Shared.Utils
 {
@@ -8,42 +9,55 @@ namespace Test.Shared.Utils
 	{
 		public Game FindGameById(string id)
 		{
-			string str = File.ReadAllText($"./{id}.json");
-			var jGame = JsonSerializer.Deserialize<JsonGame>(str);
+			string stringGame = File.ReadAllText($"./{id}.json");
+			var jsonGame = JsonSerializer.Deserialize<JsonGame>(stringGame);
 
-            Map map = new(MapLibrary._7x7Map);
-            Game game = new(jGame.Id, map);
-            foreach (JsonPlayer jPlayer in jGame.Players)
+            if (jsonGame == null)
             {
-                game.AddPlayer(new(jPlayer.Id));
-                game.SetPlayerToBlock(game.Players.Last(), jPlayer.CurrentBlockId,
-                    (Direction.Enumerates)Enum.Parse(typeof(Direction.Enumerates), jPlayer.CurrentDirection));
+                throw new FormatException($"Invalid Json Game (id:{id})");
             }
-            game.CurrentPlayer = jGame.CurrentPlayer == null ? null : game.Players.First(p => p.Id == jGame.CurrentPlayer.Id);
-            game.CurrentDice = jGame.CurrentDice;
+
+            Map map = new Map(Utils._7x7Map);
+            Game game = new(jsonGame.Id, map, new DiceSetting
+            {
+                NumberOfDice = jsonGame.DiceSetting.NumberOfDice,
+                Max = jsonGame.DiceSetting.Max,
+                Min = jsonGame.DiceSetting.Min
+            });
+
+            foreach (JsonPlayer jsonPlayer in jsonGame.Players)
+            {
+                var player = new Player(jsonPlayer.Id);
+                game.AddPlayer(player);
+                game.SetPlayerToBlock(player, jsonPlayer.CurrentBlockId,
+                    (Direction)Enum.Parse(typeof(Direction), jsonPlayer.CurrentDirection));
+            }
+            game.CurrentPlayerId = game.Players.Where(p => p.Id == jsonGame.CurrentPlayerId).FirstOrDefault().Id;
+            game.CurrentDice = jsonGame.CurrentDice;
             return game;
 		}
 
         public void Save(Game game)
         {
-            Player? currentPlayer = game.CurrentPlayer;
+            Player currentPlayer = game.FindPlayerById(game.CurrentPlayerId);
             if (currentPlayer == null) return;
             JsonGame jGame = new()
             {
                 Id = game.Id,
                 CurrentDice = game.CurrentDice,
-                CurrentPlayer = new()
-                {
-                    Id = currentPlayer.Id,
-                    CurrentBlockId = game.GetPlayerPosition(currentPlayer),
-                    CurrentDirection = game.GetPlayerDirection(currentPlayer).ToString()
-                },
+                CurrentPlayerId = currentPlayer.Id,
                 Players = game.Players.Select(p => new JsonPlayer
                 {
                     Id = p.Id,
                     CurrentBlockId = game.GetPlayerPosition(p),
                     CurrentDirection = game.GetPlayerDirection(p).ToString()
-                }).ToList()
+                }).ToList(),
+                DiceSetting = new()
+                {
+                    Max = game.DiceSetting.Max,
+                    Min = game.DiceSetting.Min,
+                    NumberOfDice = game.DiceSetting.NumberOfDice
+                }
             };
             string text = JsonSerializer.Serialize(jGame);
             File.WriteAllText($"./{game.Id}.json", text);
@@ -52,17 +66,25 @@ namespace Test.Shared.Utils
 
         private class JsonGame
         {
-            public string Id { get; set; }
+            public required string Id { get; set; }
             public int CurrentDice { get; set; }
-            public JsonPlayer CurrentPlayer { get; set; }
+            public required string CurrentPlayerId { get; set; }
             public List<JsonPlayer> Players { get; set; }
+            public required JsonDiceSetting DiceSetting  { get;set;}
+        }
+
+        private class JsonDiceSetting
+        {
+            public required int Max { get; set; }
+            public required int Min { get; set; }
+            public required int NumberOfDice { get; set; }
         }
 
         private class JsonPlayer
         {
-            public string Id { get; set; }
-            public string CurrentBlockId { get; set; }
-            public string CurrentDirection { get; set; }
+            public required string Id { get; set; }
+            public required string CurrentBlockId { get; set; }
+            public required string CurrentDirection { get; set; }
         }
     }
 }

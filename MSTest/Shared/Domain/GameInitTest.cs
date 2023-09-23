@@ -11,7 +11,7 @@ namespace Test.Shared.Domain
 		public void InitTest()
 		{
             // player a,b,c,d have 15000 money at start when the game starts
-            Game game = new Game("Test", new Map(MapLibrary._7x7Map));
+            Game game = new Game("Test", new Map(Utils.Utils._7x7Map));
             Player a = new("A");
             Player b = new("B");
             Player c = new("C");

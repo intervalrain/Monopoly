@@ -13,14 +13,17 @@ namespace Test.Shared.Usecases
 		{
 			// it's a's round. a is at Start, roll dice as 5. Move chess to A4.
 			const string GameId = "g1";
-			const string PlayerA = "A";
-            const string PlayerB = "B";
-            const string PlayerC = "C";
-            const string PlayerD = "D";
+			const string a = "A";
+            const string b = "B";
+            const string c = "C";
+            const string d = "D";
 
-            UsecaseUtils.GameSetup(GameId, PlayerA, PlayerB, PlayerC, PlayerD);
-			UsecaseUtils.SetGameDice(GameId, 5);
-			MoveChessUsecase.Input input = new(GameId, PlayerA);
+			Game game = UsecaseUtils.GameSetup(GameId, new DiceSetting(1, 5, 5),
+				a, b, c, d);
+			game.PlayerRollDice(a);
+			new JsonRepository().Save(game);
+
+			MoveChessUsecase.Input input = new(GameId, a);
 			MoveChessUsecase.Presenter presenter = new MoveChessUsecase.Presenter();
 
 			MoveChessUsecase moveChessUsecase = new MoveChessUsecase(new JsonRepository());

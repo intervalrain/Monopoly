@@ -11,10 +11,14 @@
     <None Remove="Domain\" />
     <None Remove="Repositories\" />
     <None Remove="Usecases\" />
+    <None Remove="Domain\Exceptions\" />
+    <None Remove="Domain\Interfaces\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Domain\" />
     <Folder Include="Repositories\" />
     <Folder Include="Usecases\" />
+    <Folder Include="Domain\Exceptions\" />
+    <Folder Include="Domain\Interfaces\" />
   </ItemGroup>
 </Project>

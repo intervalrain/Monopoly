@@ -10,15 +10,18 @@ namespace Test.Shared.Domain
 		[TestMethod]
 		public void MoveTest()
 		{
-            Game game = new Game("Test", new Map(MapLibrary._7x7Map));
+            // A dice can only roll 6.
+            Game game = new Game("Test", new Map(Utils.Utils._7x7Map), new DiceSetting(1, 6, 6));
             Player a = new("A");
             game.AddPlayer(a);
+            game.Initial();
+            game.SetPlayerToBlock(a, "F4", Direction.Up);
 
-            game.SetPlayerToBlock(a, "F4", Direction.Enumerates.Up);
-            
-            int point = 6;
-            game.MovePlayer(a, point);
+            // Act
+            game.PlayerRollDice(a.Id);
+            game.PlayerMoveChess(a.Id);
 
+            // Assert
             Assert.AreEqual("A4", game.GetPlayerPosition("A"));
 		}
     }
