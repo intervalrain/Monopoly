@@ -7,26 +7,26 @@ namespace Shared.Usecases
 	{
 		private readonly IRepository _repository;
 
-		public RollDiceUsecase(IRepository repo)
+		public RollDiceUsecase(IRepository repository)
 		{
-			_repository = repo;
+			_repository = repository;
 		}
 
 		public void Execute(Input input, Presenter presenter)
 		{
-			// Find
+			// 查
 			var game = _repository.FindGameById(input.GameId);
-			// Update
+			// 改
 			game.PlayerRollDice(input.PlayerId);
-			// Save
+			// 存
 			_repository.Save(game);
-			// Push
+			// 推
 			presenter.Dice = game.CurrentDice; ;
 		}
 
 		public class Presenter
 		{
-			public int Dice { get; set; }
+			public int[]? Dice { get; set; }
 		}
 
 		public record Input(string GameId, string PlayerId);

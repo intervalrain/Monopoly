@@ -1,129 +1,109 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using static Shared.Domain.Map;
+﻿using Shared.Domain.Interfaces;
 
-namespace Shared.Domain
+namespace Shared.Domain;
+
+public class Game
 {
-    public class Game
+    public string Id { get; init; }
+    public int[]? CurrentDice { get; set; } = null;
+    public Player? CurrentPlayer { get; set; } 
+    public IDice[] Dices { get; set; } 
+
+    private readonly Map _map;
+    private readonly List<Player> _players = new();
+    private readonly Dictionary<Player, int> _playerRankDictionary = new();
+
+    public IDictionary<Player, int> PlayerRankDictionary => _playerRankDictionary.AsReadOnly();
+    
+    public Game(string id, Map? map  = null, IDice[]? dices = null)
     {
-        private readonly Map _map;
-        private readonly List<Player> _players = new();
-        private readonly Dictionary<Player, int> _rankMap = new();
-        private string _id;
-        private DiceSetting _diceSetting = new DiceSetting();
+        Id = id;
+        _map = map ?? new Map(Array.Empty<Block[]>());
+        Dices = dices ?? new IDice[2] { new Dice(), new Dice() };
+    }
 
-        public IDictionary<Player, int> RankMap => _rankMap.AsReadOnly();
-        public int CurrentDice { get; set; }
-        //public Player? CurrentPlayer { get; set; }
-        public string CurrentPlayerId { get; set; }
-        public string Id => _id;
-        public List<Player> Players => _players;
-        public DiceSetting DiceSetting => _diceSetting; 
+    public void AddPlayer(Player player) => _players.Add(player);
 
-        public Game(string id, Map? initMap = null, DiceSetting? diceSetting = null)
+    public void AddPlayers(params Player[] players) => _players.AddRange(players);
+
+    public void UpdatePlayerState(Player player)
+    {
+        player.UpdateState();
+
+        if (player.IsBankrupt())
         {
-            _id = id;
-            _map = initMap ?? new Map(Array.Empty<Block[]>());
-            _diceSetting = diceSetting ?? new DiceSetting();
-        }
-
-        public void AddPlayer(Player player) => _players.Add(player);
-
-        public void AddPlayers(params Player[] players) => _players.AddRange(players);
-
-        public void SetPlayerState(Player player, PlayerState state)
-        {
-            player.SetState(state);
-            if (state == PlayerState.Bankrupt)
-            {
-                AddPlayerToRankList(player);
-            }
-        }
-
-        public void Settlement()
-        {
-            var playerList = from p in _players
-                             where p.State != PlayerState.Bankrupt
-                             orderby p.Money + p.LandContractList.Sum(l => l.Value) ascending
-                             select p;
-            foreach (var player in playerList)
-            {
-                AddPlayerToRankList(player);
-            }
-        }
-
-        public void SetPlayerToBlock(Player player, string blockId, Direction direction) => _map.SetPosition(player, blockId, direction);
-
-        public void MovePlayer(Player player, int point) => _map.MovePlayer(player, point);
-
-        public string GetPlayerPosition(Player player) => _map.GetPlayerPositionedBlockId(player);
-
-        public string GetPlayerPosition(string playerId) => _map.GetPlayerPositionedBlockId(FindPlayerById(playerId));
-
-        private void AddPlayerToRankList(Player player)
-        {
-            foreach (var rank in _rankMap)
-            {
-                _rankMap[rank.Key] += 1;
-            }
-            _rankMap.Add(player, 1);
-        }
-
-        public void UpdatePlayerState(Player player)
-        {
-            if (player.Money == 0 && player.LandContractList.Count == 0)
-            {
-                SetPlayerState(player, PlayerState.Bankrupt);
-            }
-        }
-
-        public void Initial()
-        {
-            foreach (Player player in _players)
-            {
-                Direction d = (Direction)(new Random().Next(4));
-                SetPlayerToBlock(player, "Start", d);
-            }
-            CurrentPlayerId = _players.First().Id;
-        }
-
-        public void SelectionDirection(Player player, Direction direction)
-        {
-            player.Direction = direction;
-        }
-
-        public Direction GetPlayerDirection(Player player) => player.Direction;
-
-        public Direction GetPlayerDirection(string playerId) => FindPlayerById(playerId).Direction;
-
-        public Player FindPlayerById(string playerId)
-        {
-            Player? player = _players.First(p => p.Id == playerId);
-            if (player == null) throw new NullReferenceException($"{playerId} doesn't exist.");
-            return player;
-        }
-
-        public void PlayerMoveChess(string playerId)
-        {
-            Player player = FindPlayerById(playerId);
-            CurrentPlayerId = player.Id;
-            MovePlayer(player, CurrentDice);
-
-        }
-
-        public void PlayerRollDice(string playerId)
-        {
-            Player player = FindPlayerById(playerId);
-            CurrentPlayerId = player.Id;
-            int dice = 0;
-            for (int i = 0; i < _diceSetting.NumberOfDice; i++)
-            {
-                dice += new Random().Next(_diceSetting.Min, _diceSetting.Max);
-            }
-            CurrentDice = dice;
+            AddPlayerToRankList(player);
         }
     }
-}
 
+    public void Settlement()
+    {
+        // 資產 = 土地價格+升級價格+剩餘金額
+        var playerList = from p in _players
+                         where !p.IsBankrupt()
+                         orderby p.Money + p.LandContracts.Sum(l => l.Value) ascending
+                         select p;
+        foreach (var player in playerList)
+        {
+            AddPlayerToRankList(player);
+        }
+    }
+
+    public void SetPlayerToBlock(Player player, string blockId, Direction direction) => player.Chess.SetBlock(blockId, direction);
+
+    // 玩家選擇方向
+    // 1. 不能選擇回頭的方向
+    // 2. 不能選擇沒有的方向
+    public void PlayerSelectDirection(Player player, Direction direction)
+    {
+        player.SelectDirection(direction);
+    }
+
+    private Player FindPlayerById(string playerId)
+    {
+        var player = _players.Find(p => p.Id == playerId);
+        if (player == null) throw new Exception($"找不到 {playerId} 玩家");
+        return player;
+    }
+
+    public Block GetPlayerPosition(string playerId) => FindPlayerById(playerId).Chess.CurrentBlock;
+
+    public Direction GetPlayerDirection(string playerId) => FindPlayerById(playerId).Chess.CurrentDirection;
+
+    public void Initial()
+    {
+        Block startBlock = _map.FindBlockById("Start"); 
+        foreach (Player player in _players)
+        {
+            Chess chess = new(player, _map, startBlock, Direction.Right);
+            player.Chess = chess;
+        }
+        CurrentPlayer = _players[0];
+    }
+
+    /// <summary>
+    /// 擲骰子 並且移動棋子直到遇到需要選擇方向的地方
+    /// </summary>
+    /// <param name="playerId"></param>
+    /// <exception cref="Exception"></exception>
+    public void PlayerRollDice(string playerId)
+    {
+        var player = FindPlayerById(playerId);
+        if (player != CurrentPlayer) throw new Exception($"不是 {playerId} 的玩合");
+        IDice[] dices = player.RollDice(Dices);
+    }
+
+    private void AddPlayerToRankList(Player player)
+    {
+        foreach (var rank in _playerRankDictionary)
+        {
+            _playerRankDictionary[rank.Key] += 1;
+        }
+        _playerRankDictionary.Add(player, 1);
+    }
+
+    public void SetPlayerToBlock(Player player, string v, object down)
+    {
+        throw new NotImplementedException();
+    }
+}

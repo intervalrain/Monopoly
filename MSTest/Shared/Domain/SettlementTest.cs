@@ -1,83 +1,84 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿
 using Shared.Domain;
 
-namespace Test.Shared.Domain
+namespace Test.Shared.Domain;
+
+[TestClass]
+public class GameTest
 {
-	[TestClass]
-	public class SettlementTest
-	{
-		[TestMethod]
-		public void BankruptTest()
-		{
-			/** 
-			 *  B is bankrupt and then C is bankrupt,
-			 *  The settlement is ranked as ACB
-			 */
-			Game game = new("Test");
-			Player a = new("A");
-            Player b = new("B", 0);
-            Player c = new("C", 0);
+    [TestMethod]
+    public void 玩家ABC_玩家BC破產__當遊戲結算__名次為ACB()
+    {
+        // Arrange
+        Game game = new("Test");
+        // 玩家 A B C
+        var player_a = new Player("A");
+        var player_b = new Player("B", 0);
+        var player_c = new Player("C", 0);
+        game.AddPlayer(player_a);
+        game.AddPlayer(player_b);
+        game.AddPlayer(player_c);
 
-			game.AddPlayers(a, b, c);
+        // 玩家 B、C 破產
+        game.UpdatePlayerState(player_b);
+        game.UpdatePlayerState(player_c);
 
-			game.UpdatePlayerState(b);
-			game.UpdatePlayerState(c);
-            
-			game.Settlement();
+        // Act
+        // 遊戲結算
+        game.Settlement();
 
-            Assert.AreEqual(1, game.RankMap[a]);
-            Assert.AreEqual(3, game.RankMap[b]);
-            Assert.AreEqual(2, game.RankMap[c]);
+        // Assert
+        // 玩家A獲勝
+        Assert.AreEqual(1, game.PlayerRankDictionary[player_a]);
+        Assert.AreEqual(3, game.PlayerRankDictionary[player_b]);
+        Assert.AreEqual(2, game.PlayerRankDictionary[player_c]);
 
-        }
+    }
 
-		[TestMethod]
-		public void RankTest()
-		{
-			/**
-			 * Players ABCD, game end with 
-			 *  A with money = 5000
-			 *  B with money = 4000
-			 *  C with money = 3000
-			 *  D with money = 2000
-			 *  Rank is A,B,C,D
-			 */
-			Game game = new("Test");
-			Player a = new("A");
-            Player b = new("B");
-            Player c = new("C");
-            Player d = new("D");
+    [TestMethod]
+    public void 玩家ABCD_遊戲時間結束_A的結算金額為5000_B的結算金額為4000_C的結算金額為3000_D的結算金額為2000__當遊戲結算__名次為ABCD()
+    {
+        // Arrange
+        Game game = new("Test");
+        // 玩家 A B C D
+        var player_a = new Player("A");
+        var player_b = new Player("B");
+        var player_c = new Player("C");
+        var player_d = new Player("D");
+        game.AddPlayer(player_a);
+        game.AddPlayer(player_b);
+        game.AddPlayer(player_c);
+        game.AddPlayer(player_d);
 
-			game.AddPlayers(a, b, c, d);
+        var landContractA1 = new LandContract(2000, player_a, "A1");
+        landContractA1.Upgrade();
+        player_a.AddLandContract(landContractA1);
+        player_a.AddMoney(1000);
 
-			var landContractA1 = new LandContract(2000, "A1");
-			landContractA1.Upgrade();
-			a.AddLandContract(landContractA1);
-			a.AddMoney(1000);
+        // 玩家 B 的結算金額為 4000
+        var landContractB1 = new LandContract(2000, player_b, "B1");
+        landContractB1.Upgrade();
+        player_b.AddLandContract(landContractB1);
 
-			var landContractB1 = new LandContract(2000, "B1");
-			landContractB1.Upgrade();
-			b.AddLandContract(landContractB1);
+        // 玩家 C 的結算金額為 3000
+        var landContractC1 = new LandContract(2000, player_c, "C1");
+        player_c.AddLandContract(landContractC1);
+        player_c.AddMoney(1000);
 
-			var landContractC1 = new LandContract(2000, "C1");
-			c.AddLandContract(landContractC1);
-			c.AddMoney(1000);
+        // 玩家 D 的結算金額為 2000
+        var landContractD1 = new LandContract(2000, player_d, "D1");
+        player_d.AddLandContract(landContractD1);
 
-			var landContractD1 = new LandContract(2000, "D1");
-			d.AddLandContract(landContractD1);
+        // Act
+        // 遊戲結算
+        game.Settlement();
 
-			game.Settlement();
-
-			var ranking = game.RankMap;
-
-			Assert.AreEqual(1, ranking[a]);
-            Assert.AreEqual(2, ranking[b]);
-            Assert.AreEqual(3, ranking[c]);
-            Assert.AreEqual(4, ranking[d]);
-        }
-	}
+        // Assert
+        // 名次為 A B C D
+        var ranking = game.PlayerRankDictionary;
+        Assert.AreEqual(1, ranking[player_a]);
+        Assert.AreEqual(2, ranking[player_b]);
+        Assert.AreEqual(3, ranking[player_c]);
+        Assert.AreEqual(4, ranking[player_d]);
+    }
 }
-

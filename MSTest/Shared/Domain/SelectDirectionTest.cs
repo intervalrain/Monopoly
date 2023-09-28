@@ -1,28 +1,30 @@
-﻿using System;
-using Shared.Domain;
-using Test.Shared.Utils;
+﻿using Shared.Domain;
 
-namespace Test.Shared.Domain
+namespace Test.Shared.Domain;
+
+[TestClass]
+public class SelectDirectionTest
 {
-    [TestClass]
-	public class SelectDirectionTest
-	{
-        [TestMethod]
-		public void DirectionTest()
-		{
-            // player a at parking lot, facing down, choosing left as new direction
-            Game game = new Game("Test", new Map(Utils.Utils._7x7Map));
-            Player a = new("A");
-            game.AddPlayer(a);
+    [TestMethod]
+    public void 玩家A目前在停車場_方向為Down__選擇方向Left__玩家A在停車場_方向為Left()
+    {
+        // Arrange
+        var map = new Map(Utils.SevenXSevenMap);
+        var game = new Game("Test", map);
+        var player = new Player("A");
+        game.AddPlayer(player);
+        game.Initial();
+        game.SetPlayerToBlock(player, "ParkingLot", Direction.Down);
 
-            game.SetPlayerToBlock(a, "ParkingLot", Direction.Down);
+        // Act
+        game.PlayerSelectDirection(player, Direction.Left);
 
-            game.SelectionDirection(a, Direction.Left);
-            Assert.AreEqual("ParkingLot", game.GetPlayerPosition("A"));
+        // Assert
+        Assert.AreEqual("ParkingLot", game.GetPlayerPosition("A").Id);
 
-            Direction direction = game.GetPlayerDirection("A");
-            Assert.AreEqual(Direction.Left, direction);
-		}
+        var direction = game.GetPlayerDirection("A");
+        Assert.AreEqual(Direction.Left, direction);
     }
-}
 
+
+}

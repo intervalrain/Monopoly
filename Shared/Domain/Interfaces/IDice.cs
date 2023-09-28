@@ -1,11 +1,8 @@
-﻿using System;
-namespace Shared.Domain.Interfaces
+﻿namespace Shared.Domain.Interfaces;
+
+public interface IDice
 {
-	public interface IDice
-	{
-		public int Value { get; }
+	public int Value { get; }
 
-		public void Roll();
-	}
+	public void Roll();
 }
-

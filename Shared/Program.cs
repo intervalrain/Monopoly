@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Shared
+namespace Shared;
+public class Program
 {
-    public class Program
+    public static void Main()
     {
-        public static void Main()
-        {
-        }
     }
 }

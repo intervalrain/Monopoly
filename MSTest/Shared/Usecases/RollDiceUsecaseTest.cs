@@ -1,30 +1,34 @@
-﻿using System;
-using Test.Shared.Utils;
-using Shared.Usecases;
-using Shared.Domain;
+﻿using Server.Repositories;
+using Test.Shared;
+using Test.Shared.Usecases.Utils;
 
-namespace Test.Shared.Usecases
+namespace Shared.Usecases;
+
+[TestClass]
+public class RollDiceUsecaseTest
 {
-	[TestClass]
-	public class RollDiceUsecaseTest
-	{
-		[TestMethod]
-		public void RollDiceTest()
-		{
-			// player a's round, a roll dice at the start.
-			const string GameId = "g2";
-			const string PlayerA = "A";
-            const string PlayerB = "B";
-            const string PlayerC = "C";
-            const string PlayerD = "D";
 
-            UsecaseUtils.GameSetup(GameId, PlayerA, PlayerB, PlayerC, PlayerD);
-            RollDiceUsecase.Input input = new(GameId, PlayerA);
-			RollDiceUsecase.Presenter presenter = new RollDiceUsecase.Presenter();
+    [TestMethod]
+    [Description(
+        """
+        Given:  輪到玩家A
+                玩家A在起點
+        When:   玩家擲骰子
+        Then:   不需要選擇方向
+        """)]
+    public void 玩家擲骰子後不需要選擇方向()
+    {
+        // Arrange
+        const string GameId = "g1";
 
-			RollDiceUsecase rollDiceUsecase = new RollDiceUsecase(new JsonRepository());
-			rollDiceUsecase.Execute(input, presenter);	
-		}
-	}
+        UsecaseUtils.GameSetup(Utils.MockDice(2, 3));
+        RollDiceUsecase.Input input = new(GameId, "p1");
+        var presenter = new RollDiceUsecase.Presenter();
+
+        // Act
+        var rollDiceUsecase = new RollDiceUsecase(new InMemoryRepository());
+        rollDiceUsecase.Execute(input, presenter);
+
+        // Assert
+    }
 }
-

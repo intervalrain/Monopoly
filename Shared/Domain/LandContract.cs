@@ -3,74 +3,67 @@ namespace Shared.Domain
 {
 	public class LandContract
 	{
-		private int _price;
+		public int Price { get; set; }
+        public int House { get; set; }
+        public string Id { get; set; }
+
+        private int _defaultPrice;
+		private int _sellPrice = 0;
 		private Player? _owner;
-		private int _level;
-		private string _id;
-		private Player? _bidder;
-		private int _bid;
+        private Player? _buyer = null;
 
-		public LandContract(int price, string blockId)
+		public LandContract(int price, Player? owner, string blockId)
 		{
-			this._price = price;
-			this._level = 0;
-			this._id = blockId;
+			Price = price;
+			_defaultPrice = (int)(price * 0.5);
+			_owner = owner;
+			House = 0;
+			Id = blockId;
 		}
 
-		public int Price => _price;
+		public int Value => Price * (1 + House);
 
-		public int Level => _level;
 
-		public string Id => _id;
-
-		public int Value => _price * (1 + _level);
-
-		public void Upgrade()
-		{
-			this._level++;
-		}
-
-		public void SetOwner(Player? player)
-		{
-			this._owner = player;
-		}
-
-        public bool HasOutcry()
-        {
-			return _bidder != null;
-        }
-
-		public void StartBid()
-		{
-			_bid = (int)(Resource.DEFAULT_BID_START * Value);
-		}
+        public bool HasOutcry() => _sellPrice > 0;
 
         public void SetOutcry(Player player, int price)
-		{
-            if (player.Money <= price || price <= _bid)
+        {
+			if (price > _sellPrice && player.Money >= price)
 			{
-				return;
+				_buyer = player;
+				_sellPrice = price;
 			}
-			_bidder = player;
-			_bid = price;
         }
+
+        public void Upgrade()
+		{
+			House++;
+		}
 
 		public void Sell()
 		{
-			Player? buyer = _bidder;
-			Player? seller = _owner;
-            if (seller != null)
-            {
-                seller.AddMoney(_bid);
-				seller.RemoveLandContract(this);
-            }
-            if (buyer != null)
+			int _price;
+            Player? buyer = _buyer;
+			Player? seller = _owner; 
+
+			if (_buyer != null)
 			{
-                buyer.AddMoney(-_bid);
-				buyer.AddLandContract(this);
+				_price = _sellPrice;
+				_sellPrice = 0;
 				_owner = buyer;
-            }
-			_bidder = null;	
+				_buyer = null;
+				buyer?.AddLandContract(this);
+				buyer?.AddMoney(-_price);
+			}
+			else
+			{
+				_price = (int)(Price * 0.7);
+				_sellPrice = 0;
+				_owner = null;
+				House = 0;
+			}
+			seller?.AddMoney(_price);
+			seller?.RemoveLandContract(this);
         }
     }
 }

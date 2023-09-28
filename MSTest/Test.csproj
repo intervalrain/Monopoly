@@ -29,6 +29,7 @@
     <None Remove="Shared\Utils\" />
     <None Remove="Server\" />
     <None Remove="Server\HubTests\" />
+    <None Remove="Shared\Usecases\Utils\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Shared\" />
@@ -37,5 +38,6 @@
     <Folder Include="Shared\Utils\" />
     <Folder Include="Server\" />
     <Folder Include="Server\HubTests\" />
+    <Folder Include="Shared\Usecases\Utils\" />
   </ItemGroup>
 </Project>
