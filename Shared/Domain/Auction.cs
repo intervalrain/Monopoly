@@ -31,12 +31,12 @@ public class Auction
 			{
 				Owner = highestBidder
 			});
-			highestBidder.AddMoney(-highestPrice);
-			landContract.Owner.AddMoney(highestPrice);
+			highestBidder.Money -= highestPrice;
+			landContract.Owner.Money += highestPrice;
 		}
 		else // 流標
 		{
-            landContract.Owner.AddMoney(landContract.Land.Price * (decimal)Resource.DEFAULT_NO_BID);
+            landContract.Owner.Money += (landContract.Land.Price * (decimal)Resource.DEFAULT_NO_BID);
         }
 	}
 

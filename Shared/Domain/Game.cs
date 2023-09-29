@@ -63,6 +63,9 @@ public class Game
         player.SelectDirection(direction);
     }
 
+    /// <summary>
+    /// 把所有玩家放到起點，並面向右邊，輪到第一位玩家
+    /// </summary>
     public void Initial()
     {
         Block startBlock = _map.FindBlockById("Start"); 
@@ -102,6 +105,11 @@ public class Game
         CurrentPlayer?.Auction.Bid(player, price);
     }
 
+    public void MortgageLandContract(string id, string landId)
+    {
+        Player player = FindActivePlayerById(id);
+        player.MortgageLandContract(landId);
+    }
 
     #region private function
     private Player FindPlayerById(string playerId)

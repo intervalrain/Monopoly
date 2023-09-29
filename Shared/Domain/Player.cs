@@ -12,12 +12,14 @@ public class Player
     private Chess _chess;
 	private readonly List<LandContract> _landContractList = new();
     private Auction _auction;
+    private readonly List<Mortgage> _mortgages;
 
     public Player(string id, decimal money = Resource.DEFAULT_START_MONEY)
     {
         Id = id;
         Money = money;
         State = PlayerState.Normal;
+        _mortgages = new List<Mortgage>();
     }
 
     public PlayerState State { get; private set; }
@@ -27,6 +29,7 @@ public class Player
     public IList<LandContract> LandContracts => _landContractList.AsReadOnly();
 	public Chess Chess { get => _chess; set => _chess = value; }
     public Auction Auction => _auction;
+    public IList<Mortgage> Mortgage => _mortgages.AsReadOnly(); 
 
 	public void UpdateState()
     {
@@ -53,17 +56,6 @@ public class Player
         return _landContractList.Where(l => l.Land.Id == blockId).FirstOrDefault(); ;
     }
 
-    public bool AddMoney(decimal money)
-    {
-        if (money < 0 && Money <= money)
-        {
-            return false;
-        }
-        Money += money;
-        return true;
-        
-    }
-
     public void AuctionLandContract(string landId)
     {
         LandContract? landContract = FindLandContract(landId);
@@ -84,6 +76,13 @@ public class Player
     public void SelectDirection(Direction direction)
     {
         Chess.ChangeDirection(direction);
+    }
+
+    internal void MortgageLandContract(string landId)
+    {
+        LandContract landContract = _landContractList.First(l => landId == l.Land.Id);
+        _mortgages.Add(new Mortgage(this, landContract));
+        Money += landContract.Land.Price * (decimal)Resource.DEFAULT_NO_BID;
     }
 
     internal void Outcry(int money)

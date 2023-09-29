@@ -4,7 +4,7 @@ using Shared.Domain.Exceptions;
 namespace Test.Shared.Domain;
 
 [TestClass]
-public class BuyRealEstateTest
+public class AuctionTest
 {
     [TestMethod]
     [Description(
@@ -80,6 +80,34 @@ public class BuyRealEstateTest
 
         // Act
         Assert.ThrowsException<BidException>(() => game.PlayerBid(b.Id, 3000));
+    }
+
+    [TestMethod]
+    [Description(
+        """
+        Given:  玩家A持有1000元
+                玩家B持有3000元
+                A1價格為1000元
+                玩家A擁有1000元
+                玩家A正在拍賣A1
+        When:   玩家B喊價3000元
+        Then:   玩家B喊價成功
+        """)]
+    public void 玩家喊價成功()
+    {
+        // Arrange
+        Game game = 玩家A持有1000元_玩家B持有2000元_玩家A擁有A1_A1的價格為1000_玩家A正在拍賣A1(out var a, out var b);
+        b.Money = 3000;
+
+        // Act
+        game.PlayerBid(b.Id, 3000);
+        game.EndAuction();
+
+        // Assert
+        Assert.AreEqual(a.Money, 4000);
+        Assert.AreEqual(b.Money, 0);
+        Assert.IsNull(a.FindLandContract("A1"));
+        Assert.IsNotNull(b.FindLandContract("A1"));
     }
 
     private static Game 玩家A持有1000元_玩家B持有2000元_玩家A擁有A1_A1的價格為1000_玩家A正在拍賣A1(out Player a, out Player b)
