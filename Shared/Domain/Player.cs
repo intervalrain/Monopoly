@@ -9,24 +9,28 @@ namespace Shared.Domain;
 
 public class Player
 {
-	private List<LandContract> landContractList = new();
+    private Chess _chess;
+	private readonly List<LandContract> _landContractList = new();
+    private Auction _auction;
 
     public Player(string id, int money = Resource.DEFAULT_START_MONEY)
     {
         Id = id;
         Money = money;
+        State = PlayerState.Normal;
     }
 
-    public PlayerState State { get; private set; } = PlayerState.Normal;
+    public PlayerState State { get; private set; }
     public string Id { get; }
     public int Money { get; set; }
 
-    public IList<LandContract> LandContracts => landContractList.AsReadOnly();
-	public Chess Chess { get; set; }
+    public IList<LandContract> LandContracts => _landContractList.AsReadOnly();
+	public Chess Chess { get => _chess; set => _chess = value; }
+    public Auction Auction => _auction;
 
 	public void UpdateState()
     {
-        if (landContractList.Count == 0 && Money == 0)
+        if (_landContractList.Count == 0 && Money == 0)
         {
             State = PlayerState.Bankrupt;
         }
@@ -36,43 +40,54 @@ public class Player
 
     public void AddLandContract(LandContract landContract)
     {
-        landContractList.Add(landContract);
+        _landContractList.Add(landContract);
     }
 
     public void RemoveLandContract(LandContract landContract)
     {
-        landContractList.Remove(landContract);
+        _landContractList.Remove(landContract);
     }
 
-    public bool FindLandContract(string blockId)
+    public LandContract? FindLandContract(string blockId)
     {
-        return landContractList.Any(l => l.Id == blockId);
+        return _landContractList.Where(l => l.Land.Id == blockId).FirstOrDefault(); ;
     }
 
-    public void AddMoney(int money)
+    public bool AddMoney(int money)
     {
+        if (money < 0 && Money <= money)
+        {
+            return false;
+        }
         Money += money;
+        return true;
+        
     }
 
-    public LandContract SellLandContract(string blockId)
+    public void AuctionLandContract(string landId)
     {
-        return landContractList.First(l => l.Id == blockId);
+        LandContract? landContract = FindLandContract(landId);
+        if (landContract is null) throw new Exception($"找不到{landId}的地契");
+        _auction = new Auction(landContract);
     }
-
-
 
     public IDice[] RollDice(IDice[] dices)
-	{
+    {
         foreach (var dice in dices)
         {
             dice.Roll();
         }
         Chess.Move(dices.Sum(dice => dice.Value));
         return dices;
-	}
+    }
 
     public void SelectDirection(Direction direction)
     {
         Chess.ChangeDirection(direction);
+    }
+
+    internal void Outcry(int money)
+    {
+        throw new NotImplementedException();
     }
 }

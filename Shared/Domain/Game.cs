@@ -41,7 +41,7 @@ public class Game
         // 資產 = 土地價格+升級價格+剩餘金額
         var playerList = from p in _players
                          where !p.IsBankrupt()
-                         orderby p.Money + p.LandContracts.Sum(l => l.Value) ascending
+                         orderby p.Money + p.LandContracts.Sum(l => (l.Land.House + 1) * l.Land.Price ) ascending
                          select p;
         foreach (var player in playerList)
         {
@@ -51,6 +51,10 @@ public class Game
 
     public void SetPlayerToBlock(Player player, string blockId, Direction direction) => player.Chess.SetBlock(blockId, direction);
 
+    public Block GetPlayerPosition(string playerId) => FindPlayerById(playerId).Chess.CurrentBlock;
+
+    public Direction GetPlayerDirection(string playerId) => FindPlayerById(playerId).Chess.CurrentDirection;
+
     // 玩家選擇方向
     // 1. 不能選擇回頭的方向
     // 2. 不能選擇沒有的方向
@@ -59,24 +63,12 @@ public class Game
         player.SelectDirection(direction);
     }
 
-    private Player FindPlayerById(string playerId)
-    {
-        var player = _players.Find(p => p.Id == playerId);
-        if (player == null) throw new Exception($"找不到 {playerId} 玩家");
-        return player;
-    }
-
-    public Block GetPlayerPosition(string playerId) => FindPlayerById(playerId).Chess.CurrentBlock;
-
-    public Direction GetPlayerDirection(string playerId) => FindPlayerById(playerId).Chess.CurrentDirection;
-
     public void Initial()
     {
         Block startBlock = _map.FindBlockById("Start"); 
         foreach (Player player in _players)
         {
-            Chess chess = new(player, _map, startBlock, Direction.Right);
-            player.Chess = chess;
+            player.Chess = new(player, _map, startBlock, Direction.Right);
         }
         CurrentPlayer = _players[0];
     }
@@ -86,11 +78,47 @@ public class Game
     /// </summary>
     /// <param name="playerId"></param>
     /// <exception cref="Exception"></exception>
-    public void PlayerRollDice(string playerId)
+    public IDice[] PlayerRollDice(string playerId)
+    {
+        var player = FindActivePlayerById(playerId);
+        IDice[] dices = player.RollDice(Dices);
+        return dices;
+    }
+
+    public void EndAuction()
+    {
+        CurrentPlayer?.Auction.End();
+    }
+
+    public void PlayerSellLandContract(string playerId, string landId)
+    {
+        var player = FindActivePlayerById(playerId);
+        player.AuctionLandContract(landId);
+    }
+
+    public void PlayerBid(string playerId, int price)
+    {
+        var player = FindPlayerById(playerId); 
+        CurrentPlayer?.Auction.Bid(player, price);
+    }
+
+
+    #region private function
+    private Player FindPlayerById(string playerId)
+    {
+        var player = _players.Find(p => p.Id == playerId);
+        if (player is null)
+        {
+            throw new Exception($"找不到 {playerId} 玩家");
+        }
+        return player;
+    }
+
+    private Player FindActivePlayerById(string playerId)
     {
         var player = FindPlayerById(playerId);
-        if (player != CurrentPlayer) throw new Exception($"不是 {playerId} 的玩合");
-        IDice[] dices = player.RollDice(Dices);
+        if (player != CurrentPlayer) throw new Exception($"不是 {player.Id} 的玩合");
+        return player;
     }
 
     private void AddPlayerToRankList(Player player)
@@ -101,9 +129,5 @@ public class Game
         }
         _playerRankDictionary.Add(player, 1);
     }
-
-    public void SetPlayerToBlock(Player player, string v, object down)
-    {
-        throw new NotImplementedException();
-    }
+    #endregion
 }

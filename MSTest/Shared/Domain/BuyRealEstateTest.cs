@@ -1,4 +1,5 @@
 ﻿using Shared.Domain;
+using Shared.Domain.Exceptions;
 
 namespace Test.Shared.Domain;
 
@@ -6,68 +7,94 @@ namespace Test.Shared.Domain;
 public class BuyRealEstateTest
 {
     [TestMethod]
-    public void 玩家ABC_玩家A拍賣A1_賣給系統()
+    [Description(
+        """
+        Given: 玩家A持有1000元
+               A1價格為1000元
+               玩家A擁有A1
+               玩家A正在拍賣A1
+               目前無人喊價
+        When:  拍賣結算
+        Then:  玩家A不再擁有A1
+               玩家A持有1700元
+        """)]
+    public void 拍賣結算時流標()
     {
-        string a_id = "a",
-               b_id = "b",
-               c_id = "c";
+        // Arrange
+        var game = 玩家A持有1000元_玩家B持有2000元_玩家A擁有A1_A1的價格為1000_玩家A正在拍賣A1(out var a, out var b);
 
-        Player a = new(a_id, 1000),
-               b = new(b_id, 2000),
-               c = new(c_id, 3000);
+        // Act
+        game.EndAuction();
 
-        a.AddLandContract(new(1000, a, "A1"));
-        var landContract = a.SellLandContract("A1");
-        if (!landContract.HasOutcry())
-            landContract.Sell();
-
-        Assert.AreEqual(a.FindLandContract("A1"), false);
+        // Assert
+        Assert.IsNull(a.FindLandContract("A1"));
         Assert.AreEqual(a.Money, 1700);
     }
 
     [TestMethod]
-    public void 玩家ABC_玩家A拍賣A1_B喊價600_B獲得A1()
+    [Description(
+        """
+        Given: 玩家A持有1000元
+               玩家B持有2000元
+               A1價格為1000元
+               玩家A擁有A1
+               玩家A正在拍賣A1
+               玩家B喊價600元
+        When:  拍賣結算
+        Then:  玩家A持有1600元
+               玩家A不再擁有A1
+               玩家B持有1400元
+               玩家B擁有A1
+        """)]
+    public void 拍賣結算時轉移金錢及地契()
     {
-        string a_id = "a",
-               b_id = "b",
-               c_id = "c";
+        // Arrange
+        var game = 玩家A持有1000元_玩家B持有2000元_玩家A擁有A1_A1的價格為1000_玩家A正在拍賣A1(out var a, out var b);
+        game.PlayerBid(b.Id, 600);
 
-        Player a = new(a_id, 1000),
-               b = new(b_id, 2000),
-               c = new(c_id, 3000);
+        // Act
+        game.EndAuction();
 
-        a.AddLandContract(new(1000, a, "A1"));
-        var landContract = a.SellLandContract("A1");
-
-        landContract.SetOutcry(b, 600);
-        landContract.Sell();
-
-        Assert.AreEqual(a.FindLandContract("A1"), false);
+        // Assert
+        Assert.IsNull(a.FindLandContract("A1"));
+        Assert.IsNotNull(b.FindLandContract("A1"));
         Assert.AreEqual(a.Money, 1600);
         Assert.AreEqual(b.Money, 1400);
-        Assert.AreEqual(b.FindLandContract("A1"), true);
     }
 
     [TestMethod]
-    public void 玩家ABC_玩家A拍賣A1_B喊價3000因餘額不足不能喊價()
+    [Description(
+    """
+        Given: 玩家A持有1000元
+               玩家B持有2000元
+               A1價格為1000元
+               玩家A擁有A1
+               玩家A正在拍賣A1
+        When:  玩家B喊價3000元
+        Then:  玩家B不能喊價
+        """)]
+    public void 不能喊出比自己的現金還要大的價錢()
     {
-        string a_id = "a",
-               b_id = "b",
-               c_id = "c";
+        // Arrange
+        var game = 玩家A持有1000元_玩家B持有2000元_玩家A擁有A1_A1的價格為1000_玩家A正在拍賣A1(out var a, out var b);
 
-        Player a = new(a_id, 1000),
-               b = new(b_id, 2000),
-               c = new(c_id, 3000);
+        // Act
+        Assert.ThrowsException<BidException>(() => game.PlayerBid(b.Id, 3000));
+    }
 
-        a.AddLandContract(new(1000, a, "A1"));
-        var landContract = a.SellLandContract("A1");
-
-        landContract.SetOutcry(b, 3000);
-        landContract.Sell();
-
-        Assert.AreEqual(a.FindLandContract("A1"), false);
-        Assert.AreEqual(a.Money, 1700);
-        Assert.AreEqual(b.Money, 2000);
-        Assert.AreEqual(b.FindLandContract("A1"), false);
+    private static Game 玩家A持有1000元_玩家B持有2000元_玩家A擁有A1_A1的價格為1000_玩家A正在拍賣A1(out Player a, out Player b)
+    {
+        var map = new Map(Utils.SevenXSevenMap);
+        Game game = new Game("g1", map);
+        a = new("A", 1000);
+        b = new("B", 2000);
+        game.AddPlayers(a, b);
+        game.Initial();
+        Land A1 = (Land)map.FindBlockById("A1");
+        LandContract contract = new LandContract(a, A1);
+        a.AddLandContract(contract);
+        game.PlayerSellLandContract(a.Id, "A1");
+        
+        return game;
     }
 }

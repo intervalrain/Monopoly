@@ -7,6 +7,7 @@ public abstract class Block
 	public Block? Down { get; set; }
 	public Block? Left { get; set; }
 	public Block? Right { get; set; }
+	
 	public List<Direction> Directions => new List<Direction>
 	{
 		Up is not null ? Direction.Up : Direction.None,
@@ -35,8 +36,18 @@ public abstract class Block
 
 public class Land : Block
 {
-	public Land(string id)
+	private readonly int _price;
+	private int _house;
+	public int Price => _price;
+	public int House => _house;
+	public Land(string id, int price = 1000)
 		: base(id)
 	{
+		_price = price;
+	}
+
+	public void Upgrade()
+	{
+		_house++;
 	}
 }
