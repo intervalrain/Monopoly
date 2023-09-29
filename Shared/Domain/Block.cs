@@ -51,3 +51,11 @@ public class Land : Block
 		_house++;
 	}
 }
+
+public class Start : Block
+{
+	public Start(string id)
+		: base(id)
+	{
+	}
+}

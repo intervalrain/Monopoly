@@ -40,6 +40,10 @@ public class Chess
 			}
 			currentBlock = nextBlock;
 			remainingSteps--;
+			if (currentBlock is Start && remainingSteps > 0)
+			{
+				player.AddMoney(Resource.DEFAULT_PASS_START_BONUS);
+			}
 			var directions = DirectionOptions();
 			if (directions.Count > 1)
 			{

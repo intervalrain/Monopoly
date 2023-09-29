@@ -1,4 +1,5 @@
-﻿using Shared.Domain.Exceptions;
+﻿using Shared;
+using Shared.Domain.Exceptions;
 
 namespace Shared.Domain;
 
@@ -11,7 +12,7 @@ public class Auction
 	public Auction(LandContract landContract)
 	{
 		this.landContract = landContract;
-		highestPrice = landContract.Land.Price * (decimal)0.5;
+		highestPrice = landContract.Land.Price * (decimal)Resource.DEFAULT_BID_START;
 	}
 
 	/// <summary>
@@ -35,7 +36,7 @@ public class Auction
 		}
 		else // 流標
 		{
-            landContract.Owner.AddMoney(landContract.Land.Price * (decimal)0.7);
+            landContract.Owner.AddMoney(landContract.Land.Price * (decimal)Resource.DEFAULT_NO_BID);
         }
 	}
 
