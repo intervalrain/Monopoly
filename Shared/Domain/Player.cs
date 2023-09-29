@@ -13,7 +13,7 @@ public class Player
 	private readonly List<LandContract> _landContractList = new();
     private Auction _auction;
 
-    public Player(string id, int money = Resource.DEFAULT_START_MONEY)
+    public Player(string id, decimal money = Resource.DEFAULT_START_MONEY)
     {
         Id = id;
         Money = money;
@@ -22,7 +22,7 @@ public class Player
 
     public PlayerState State { get; private set; }
     public string Id { get; }
-    public int Money { get; set; }
+    public decimal Money { get; set; }
 
     public IList<LandContract> LandContracts => _landContractList.AsReadOnly();
 	public Chess Chess { get => _chess; set => _chess = value; }
@@ -53,7 +53,7 @@ public class Player
         return _landContractList.Where(l => l.Land.Id == blockId).FirstOrDefault(); ;
     }
 
-    public bool AddMoney(int money)
+    public bool AddMoney(decimal money)
     {
         if (money < 0 && Money <= money)
         {

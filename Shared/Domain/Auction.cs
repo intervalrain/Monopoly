@@ -6,12 +6,12 @@ public class Auction
 {
 	private LandContract landContract;
 	private Player? highestBidder;
-	private int highestPrice;
+	private decimal highestPrice;
 
 	public Auction(LandContract landContract)
 	{
 		this.landContract = landContract;
-		highestPrice = (int)(landContract.Land.Price * 0.5);
+		highestPrice = (decimal)(((int)(landContract.Land.Price) * 0.5));
 	}
 
 	/// <summary>
@@ -35,8 +35,8 @@ public class Auction
 		}
 		else // 流標
 		{
-			landContract.Owner.AddMoney((int)(landContract.Land.Price * 0.7));
-		}
+            landContract.Owner.AddMoney((decimal)(((int)landContract.Land.Price) * 0.7));
+        }
 	}
 
 	internal void Bid(Player player, int price)

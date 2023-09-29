@@ -36,11 +36,11 @@ public abstract class Block
 
 public class Land : Block
 {
-	private readonly int _price;
+	private readonly decimal _price;
 	private int _house;
-	public int Price => _price;
+	public decimal Price => _price;
 	public int House => _house;
-	public Land(string id, int price = 1000)
+	public Land(string id, decimal price = 1000)
 		: base(id)
 	{
 		_price = price;
