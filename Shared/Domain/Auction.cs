@@ -11,7 +11,7 @@ public class Auction
 	public Auction(LandContract landContract)
 	{
 		this.landContract = landContract;
-		highestPrice = (decimal)(((int)(landContract.Land.Price) * 0.5));
+		highestPrice = landContract.Land.Price * (decimal)0.5;
 	}
 
 	/// <summary>
@@ -35,7 +35,7 @@ public class Auction
 		}
 		else // 流標
 		{
-            landContract.Owner.AddMoney((decimal)(((int)landContract.Land.Price) * 0.7));
+            landContract.Owner.AddMoney(landContract.Land.Price * (decimal)0.7);
         }
 	}
 
