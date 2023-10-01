@@ -51,9 +51,9 @@ public class Game
 
     public void SetPlayerToBlock(Player player, string blockId, Direction direction) => player.Chess.SetBlock(blockId, direction);
 
-    public Block GetPlayerPosition(string playerId) => FindPlayerById(playerId).Chess.CurrentBlock;
+    public Block GetPlayerPosition(string playerId) => GetPlayer(playerId).Chess.CurrentBlock;
 
-    public Direction GetPlayerDirection(string playerId) => FindPlayerById(playerId).Chess.CurrentDirection;
+    public Direction GetPlayerDirection(string playerId) => GetPlayer(playerId).Chess.CurrentDirection;
 
     // 玩家選擇方向
     // 1. 不能選擇回頭的方向
@@ -83,7 +83,8 @@ public class Game
     /// <exception cref="Exception"></exception>
     public IDice[] PlayerRollDice(string playerId)
     {
-        var player = FindActivePlayerById(playerId);
+        Player player = GetPlayer(playerId);
+        VerifyCurrentPlayer(player);
         IDice[] dices = player.RollDice(Dices);
         return dices;
     }
@@ -95,24 +96,44 @@ public class Game
 
     public void PlayerSellLandContract(string playerId, string landId)
     {
-        var player = FindActivePlayerById(playerId);
+        Player player = GetPlayer(playerId);
+        VerifyCurrentPlayer(player);
         player.AuctionLandContract(landId);
     }
 
     public void PlayerBid(string playerId, int price)
     {
-        var player = FindPlayerById(playerId); 
+        var player = GetPlayer(playerId); 
         CurrentPlayer?.Auction.Bid(player, price);
     }
 
-    public void MortgageLandContract(string id, string landId)
+    public void MortgageLandContract(string playerId, string landId)
     {
-        Player player = FindActivePlayerById(id);
+        Player player = GetPlayer(playerId);
+        VerifyCurrentPlayer(player);
         player.MortgageLandContract(landId);
     }
 
+    public void BuyLand(Player player, string blockId)
+    {
+        if (player.Chess.CurrentBlock.Id != blockId)
+            throw new Exception("必須在購買的土地上才可以購買");
+        if (FindPlayerByLandId(blockId) != null)
+            throw new Exception("非空地");
+
+        Land land = (Land)_map.FindBlockById(blockId);
+        if (land.Price > player.Money)
+            throw new Exception("金額不足");
+
+        player.Money -= land.Price;
+
+        LandContract landContract = new LandContract(player, land);
+        player.AddLandContract(landContract);
+
+    }
+
     #region private function
-    private Player FindPlayerById(string playerId)
+    private Player GetPlayer(string playerId)
     {
         var player = _players.Find(p => p.Id == playerId);
         if (player is null)
@@ -122,11 +143,17 @@ public class Game
         return player;
     }
 
-    private Player FindActivePlayerById(string playerId)
+    private void VerifyCurrentPlayer(Player player)
     {
-        var player = FindPlayerById(playerId);
-        if (player != CurrentPlayer) throw new Exception($"不是 {player.Id} 的玩合");
-        return player;
+        if (player != CurrentPlayer)
+        {
+            throw new Exception($"不是 {player.Id} 的玩合");
+        }
+    }
+
+    private Player? FindPlayerByLandId(string blockId)
+    {
+        return _players.Where(p => p.LandContracts.Any(l => l.Land.Id == blockId)).FirstOrDefault();
     }
 
     private void AddPlayerToRankList(Player player)
