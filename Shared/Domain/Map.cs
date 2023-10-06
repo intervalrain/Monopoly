@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Shared.Domain;
+namespace Application.Domain;
 
 public class Map
 {

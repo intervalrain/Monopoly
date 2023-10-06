@@ -1,7 +1,7 @@
-﻿using Shared.Domain.Exceptions;
-using Shared.Domain;
+﻿using Application.Domain.Exceptions;
+using Application.Domain;
 
-namespace Test.Shared.Domain;
+namespace Test.Application.Domain;
 
 [TestClass]
 public class RollDiceTest

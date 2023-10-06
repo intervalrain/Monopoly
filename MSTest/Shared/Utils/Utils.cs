@@ -1,8 +1,8 @@
 ﻿using Moq;
-using Shared.Domain;
-using Shared.Domain.Interfaces;
+using Application.Domain;
+using Application.Domain.Interfaces;
 
-namespace Test.Shared;
+namespace Test.Application;
 
 public class Utils
 {
@@ -17,13 +17,13 @@ public class Utils
         */
     public static Block?[][] SevenXSevenMap => new Block?[][]
     {
-        new Block?[] { new Start("Start"),   new Land("A1"), new Land("Station1"), new Land("A2"), new Land("A3"),         null,           null },
-        new Block?[] { new Land("F4"),       null,           null,                 null,           new Land("A4"),         null,           null },
-        new Block?[] { new Land("Station4"), null,           new Land("B5"),       new Land("B6"), new Land("ParkingLot"), new Land("C1"), new Land("C2") },
-        new Block?[] { new Land("F3"),       null,           new Land("B4"),       null,           new Land("B1"),         null,           new Land("C3") },
-        new Block?[] { new Land("F2"),       new Land("F1"), new Land("Prison"),   new Land("B3"), new Land("B2"),         null,           new Land("Station2") },
-        new Block?[] { null,                 null,           new Land("E3"),       null,           null,                   null,           new Land("D1") },
-        new Block?[] { null,                 null,           new Land("E2"),       new Land("E1"), new Land("Station3"),   new Land("D3"), new Land("D2") }
+        new Block?[] { new Start("Start"),      new Land("A1", "A"), new Station("Station1"), new Land("A2", "A"), new Land("A3", "A"),          null,                null },
+        new Block?[] { new Land("F4", "F"),     null,                null,                    null,                new Land("A4", "A"),          null,                null },
+        new Block?[] { new Station("Station4"), null,                new Land("B5", "B"),     new Land("B6", "B"), new ParkingLot("ParkingLot"), new Land("C1", "C"), new Land("C2", "C") },
+        new Block?[] { new Land("F3", "F"),     null,                new Land("B4", "B"),     null,                new Land("B1", "B"),          null,                new Land("C3", "C") },
+        new Block?[] { new Land("F2", "F"),     new Land("F1", "F"), new Jail("Jail"),        new Land("B3", "B"), new Land("B2", "B"),          null,                new Station("Station2") },
+        new Block?[] { null,                    null,                new Land("E3", "E"),     null,                null,                         null,                new Land("D1", "D") },
+        new Block?[] { null,                    null,                new Land("E2", "E"),     new Land("E1", "E"), new Station("Station3"),      new Land("D3", "D"), new Land("D2", "D") }
     };
 
     public static IDice[]? MockDice(params int[] diceValues)

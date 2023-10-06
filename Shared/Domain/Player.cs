@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Shared;
-using Shared.Domain.Interfaces;
+﻿using Application.Domain.Interfaces;
 
-namespace Shared.Domain;
+namespace Application.Domain;
 
 public class Player
 {
@@ -41,14 +36,22 @@ public class Player
 
     public bool IsBankrupt() => State == PlayerState.Bankrupt;
 
-    public void AddLandContract(LandContract landContract)
+    public void AddLandContracts(params Land[] lands)
     {
-        _landContractList.Add(landContract);
+        foreach (Land land in lands)
+        {
+            land.LandContract.Owner = this;
+            _landContractList.Add(land.LandContract);
+        }
     }
 
-    public void RemoveLandContract(LandContract landContract)
+    public void RemoveLandContracts(params Land[] lands)
     {
-        _landContractList.Remove(landContract);
+        foreach (Land land in lands)
+        {
+            _landContractList.Remove(land.LandContract);
+        }
+        
     }
 
     public LandContract? FindLandContract(string blockId)
@@ -88,5 +91,10 @@ public class Player
     internal void Outcry(int money)
     {
         throw new NotImplementedException();
+    }
+
+    public override string ToString()
+    {
+        return this.Id;
     }
 }

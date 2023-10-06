@@ -1,7 +1,7 @@
-﻿using Shared.Domain;
-using Shared.Domain.Exceptions;
+﻿using Application.Domain;
+using Application.Domain.Exceptions;
 
-namespace Test.Shared.Domain;
+namespace Test.Application.Domain;
 
 [TestClass]
 public class AuctionTest
@@ -58,8 +58,8 @@ public class AuctionTest
         // Assert
         Assert.IsNull(a.FindLandContract("A1"));
         Assert.IsNotNull(b.FindLandContract("A1"));
-        Assert.AreEqual(a.Money, 1600);
-        Assert.AreEqual(b.Money, 1400);
+        Assert.AreEqual(1600, a.Money);
+        Assert.AreEqual(1400, b.Money, 1400);
     }
 
     [TestMethod]
@@ -119,8 +119,7 @@ public class AuctionTest
         game.AddPlayers(a, b);
         game.Initial();
         Land A1 = (Land)map.FindBlockById("A1");
-        LandContract contract = new LandContract(a, A1);
-        a.AddLandContract(contract);
+        a.AddLandContracts(A1);
         game.PlayerSellLandContract(a.Id, "A1");
         
         return game;

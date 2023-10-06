@@ -1,7 +1,7 @@
-﻿using Shared.Domain;
-using Shared.Domain.Exceptions;
+﻿using Application.Domain;
+using Application.Domain.Exceptions;
 
-namespace Test.Shared.Domain;
+namespace Test.Application.Domain;
 
 [TestClass]
 public class SelectDirectionTest
@@ -97,7 +97,7 @@ public class SelectDirectionTest
             game.PlayerSelectDirection(player, Direction.Left));
 
         // Assert
-        Assert.AreEqual("Prison", game.GetPlayerPosition("A").Id);
+        Assert.AreEqual("Jail", game.GetPlayerPosition("A").Id);
     }
 
 }

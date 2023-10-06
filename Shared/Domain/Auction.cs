@@ -1,7 +1,7 @@
-﻿using Shared;
-using Shared.Domain.Exceptions;
+﻿using Application;
+using Application.Domain.Exceptions;
 
-namespace Shared.Domain;
+namespace Application.Domain;
 
 public class Auction
 {
@@ -24,21 +24,21 @@ public class Auction
 	/// </summary>
 	internal void End()
 	{
-		landContract.Owner.RemoveLandContract(landContract);
+		Land land = landContract.Land;
+		Player? owner = landContract.Owner; 
 		if (highestBidder != null)
 		{
-			highestBidder.AddLandContract(landContract with
-			{
-				Owner = highestBidder
-			});
+            owner!.Money += highestPrice;
+            highestBidder.AddLandContracts(land);
 			highestBidder.Money -= highestPrice;
-			landContract.Owner.Money += highestPrice;
 		}
 		else // 流標
 		{
-            landContract.Owner.Money += (landContract.Land.Price * (decimal)Resource.DEFAULT_NO_BID);
+            owner!.Money += (landContract.Land.Price * (decimal)Resource.DEFAULT_NO_BID);
         }
-	}
+        owner!.RemoveLandContracts(land);
+        land.UpdateOwner(highestBidder);
+    }
 
 	internal void Bid(Player player, int price)
 	{

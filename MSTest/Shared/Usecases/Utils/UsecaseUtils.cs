@@ -1,15 +1,14 @@
 ﻿using Server.Repositories;
-using Shared.Domain;
-using Shared.Domain.Interfaces;
-using Test.Shared;
+using Application.Domain;
+using Application.Domain.Interfaces;
 
-namespace Test.Shared.Usecases.Utils;
+namespace Test.Application.Usecases.Utils;
 
 public class UsecaseUtils
 {
     public static Game GameSetup(IDice[]? dice = null)
     {
-        var map = new Map(Shared.Utils.SevenXSevenMap);
+        var map = new Map(Application.Utils.SevenXSevenMap);
         var game = new Game("g1", map, dice);
         var playerA = new Player("p1");
         var playerB = new Player("p2");

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Shared.Domain.Exceptions;
+namespace Application.Domain.Exceptions;
 
 [Serializable]
 public class BidException : Exception

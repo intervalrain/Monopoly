@@ -1,6 +1,6 @@
-﻿using Shared.Domain.Interfaces;
+﻿using Application.Domain.Interfaces;
 
-namespace Shared.Domain;
+namespace Application.Domain;
 
 public class Game
 {
@@ -114,6 +114,24 @@ public class Game
         player.MortgageLandContract(landId);
     }
 
+    public Player? GetOwner(Land location)
+    {
+        return location.GetOwner();
+    }
+
+
+    public bool CalculateToll(Land location, Player payer, Player payee, out decimal amount)
+    {
+        return location.CalculateToll(payer, payee, out amount);
+    }
+
+
+    public void PayToll(Player payer, Player payee, decimal amount)
+    {
+        payer.Money -= amount;
+        payee.Money += amount;
+    }
+
     public void BuyLand(Player player, string blockId)
     {
         if (player.Chess.CurrentBlock.Id != blockId)
@@ -126,10 +144,14 @@ public class Game
             throw new Exception("金額不足");
 
         player.Money -= land.Price;
+        player.AddLandContracts(land);
+    }
 
-        LandContract landContract = new LandContract(player, land);
-        player.AddLandContract(landContract);
-
+    public void UpgradeLand(Land land, int level = 1)
+    {
+        Player? player = FindPlayerByLandId(land.Id);
+        if (player is null) throw new Exception($"{land.Id}不屬於任何人");
+        land.Upgrade(player, level);
     }
 
     #region private function

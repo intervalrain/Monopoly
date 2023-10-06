@@ -1,4 +1,4 @@
-﻿namespace Shared.Domain.Interfaces;
+﻿namespace Application.Domain.Interfaces;
 
 public interface IDice
 {

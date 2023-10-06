@@ -1,6 +1,6 @@
 ﻿using System;
-using Shared.Domain;
-using Shared.Repositories;
+using Application.Domain;
+using Application.Repositories;
 
 namespace Server.Repositories;
 

@@ -1,6 +1,6 @@
-﻿using Shared.Domain.Exceptions;
+﻿using Application.Domain.Exceptions;
 
-namespace Shared.Domain;
+namespace Application.Domain;
 
 public class Chess
 {

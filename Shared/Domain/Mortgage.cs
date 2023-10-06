@@ -1,21 +1,18 @@
-﻿using System;
-namespace Shared.Domain
+﻿namespace Application.Domain;
+
+public class Mortgage
 {
-	public class Mortgage
+	private Player player;
+	private LandContract landContract;
+	private int deadline;
+
+	public Mortgage(Player player, LandContract landContract)
 	{
-		private Player player;
-		private LandContract landContract;
-		private int deadline;
-
-		public Mortgage(Player player, LandContract landContract)
-		{
-			this.player = player;
-			this.landContract = landContract;
-			this.deadline = 10;
-		}
-
-		public LandContract LandContract => landContract;
-		public int Deadline => deadline;
+		this.player = player;
+		this.landContract = landContract;
+		this.deadline = 10;
 	}
-}
 
+	public LandContract LandContract => landContract;
+	public int Deadline => deadline;
+}

@@ -1,6 +1,6 @@
-﻿using System;
-using Shared.Domain;
-namespace Shared.Repositories;
+﻿using Application.Domain;
+
+namespace Application.Repositories;
 
 public interface IRepository
 {

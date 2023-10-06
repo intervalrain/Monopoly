@@ -1,7 +1,7 @@
 ﻿using System;
-using Shared.Domain.Interfaces;
+using Application.Domain.Interfaces;
 
-namespace Shared.Domain;
+namespace Application.Domain;
 
 public class Dice : IDice
 {

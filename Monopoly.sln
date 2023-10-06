@@ -5,7 +5,7 @@ VisualStudioVersion = 25.0.1706.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{17E0B8F0-BA4B-4AF4-BE38-0F9E8A007D59}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{7C26F631-4F7A-49EE-A0CE-777BEF43A448}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Shared\Application.csproj", "{7C26F631-4F7A-49EE-A0CE-777BEF43A448}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "MSTest\Test.csproj", "{D2F64641-27E0-459D-8A87-885FB33A7C8B}"
 EndProject

@@ -1,6 +1,6 @@
-﻿using Shared.Domain;
+﻿using Application.Domain;
 
-namespace Test.Shared.Domain;
+namespace Test.Application.Domain;
 
 [TestClass]
 public class BankruptTest

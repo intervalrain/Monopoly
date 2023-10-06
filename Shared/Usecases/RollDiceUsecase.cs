@@ -1,7 +1,6 @@
-﻿using System;
-using Shared.Repositories;
+﻿using Application.Repositories;
 
-namespace Shared.Usecases
+namespace Application.Usecases
 {
 	public class RollDiceUsecase
 	{
