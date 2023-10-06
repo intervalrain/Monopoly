@@ -1,22 +1,28 @@
 ﻿using System;
 using Application.Domain;
-using Application.Repositories;
+using Application.Common;
 
 namespace Server.Repositories;
 
 public class InMemoryRepository : IRepository
 {
-    private static readonly Dictionary<string, Game> Games = new(); 
+    private static readonly Dictionary<string, Monopoly> Games = new(); 
 
-    public Game FindGameById(string id)
+    public Monopoly FindGameById(string id)
     {
-        Games.TryGetValue(id, out Game? game);
+        Games.TryGetValue(id, out Monopoly? game);
+        if (game == null)
+        {
+            throw new GameNotFoundException(id);
+        }
         return game;
     }
 
-    public void Save(Game game)
+    public string Save(Monopoly game)
     {
+        game.Id ??= (Games.Count + 1).ToString(); 
         Games[game.Id] = game;
+        return game.Id;
     }
 }
 

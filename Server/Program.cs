@@ -1,12 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Application;
+using Application.Common;
+using Application.Domain.Common;
+using Server;
+using Server.Hubs;
+using Server.Repositories;
 
-namespace Server;
-public class Program
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSingleton<IRepository, InMemoryRepository>();
+builder.Services.AddSingleton<IEventBus<DomainEvent>, MonopolyEventBus>();
+builder.Services.AddMonopolyApplication();
+builder.Services.AddSignalR(options =>
 {
-    public static void Main()
-    {
-    }
-}
+    options.EnableDetailedErrors = true;
+});
+
+var app = builder.Build();
+app.MapHub<MonopolyHub>("/monopoly");
+
+app.Run();
