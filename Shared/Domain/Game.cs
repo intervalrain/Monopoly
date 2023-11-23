@@ -7,36 +7,42 @@ namespace Shared.Domain;
 
 public class Game
 {
-	private Dictionary<string, Player> players = new(); 
+	private Dictionary<string, Player> _players = new();
+	private List<Player> _rank = new();
 
-	public void AddPlayer(string id)
+	public void AddPlayer(Player player)
 	{
-		players.Add(id, new Player(id));
+		_players.Add(player.Id, player);
 	}
 
-    public void AddPlayers(params string[] ids)
+    public void AddPlayers(params Player[] players)
     {
-		foreach (string id in ids)
-			players.Add(id, new Player(id));
+		foreach (var player in players)
+			_players.Add(player.Id, player);
     }
 
-    public void SetState(string id, PlayerState playerState)
+	public void AllocateMoney(Player? player, int money)
 	{
-		var player = FindPlayerById(id);
-		if (player != null)
-			player.State = PlayerState.Bankrupt;
+		if (player == null) return;
+		if (player.AddMoney(money))
+		{
+			if (!_rank.Contains(player))
+			{
+                _rank.Add(player);
+            }
+		}
 	}
 
-	public Player? FindPlayerById(string id)
+	public List<Player> Settlement()
 	{
-		if (!players.ContainsKey(id)) throw new KeyNotFoundException();
-		return players[id];
-	}
-
-	public Player? Settlement()
-	{
-		var winner = players.Where(p => p.Value.State == PlayerState.Normal);
-		if (winner.Count() != 1) throw new Exception("Game not end");
-		return winner.FirstOrDefault().Value;
+		var left = _players.Where(p => p.Value.State == PlayerState.Normal)
+						   .Select(p => p.Value)
+						   .OrderBy(p => p.Money);
+		foreach (var player in left)
+		{
+			_rank.Add(player);
+		}
+		_rank.Reverse();
+		return _rank;
 	}
 }

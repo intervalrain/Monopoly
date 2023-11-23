@@ -4,12 +4,29 @@ namespace Shared.Domain;
 public class Player
 {
 	private string _id;
-	public string Id => _id;
-	public PlayerState State { get; set; }
+	private int _money;
+	private PlayerState _state;
 
-	public Player(string id)
+	public string Id => _id;
+	public int Money => _money;
+	public PlayerState State => _state;
+
+	public Player(string id, int init = 5000)
 	{
 		_id = id;
-		State = PlayerState.Normal;
+		_state = PlayerState.Normal;
+		_money = init;
+	}
+
+	public bool AddMoney(int money)
+	{
+		if (_money + money <= 0)
+		{
+			money = 0;
+			_state = PlayerState.Bankrupt;
+			return true;
+		}
+		money += money;
+		return false;
 	}
 }
