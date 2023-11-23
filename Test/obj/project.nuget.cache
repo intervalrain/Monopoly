@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "dQP3KJnBqcBnzDulgvC7XwarhXiAw56b4nQ39FFXmUinDgMQLrrt/EAJxh3kCw0eV0HfGENdKiWb8xDRRcYzPQ==",
+  "dgSpecHash": "r/NHKUmKdWc1Dzes2bb4efQn3OSixGLnnoOVP843vIhOHZ6W+as+2My7fZrEdbP4exZo9617Pqxub6Mc06sbbQ==",
   "success": true,
-  "projectFilePath": "/Users/rainhu/Desktop/Monopoly/Test/Test.csproj",
+  "projectFilePath": "/Users/rainhu/Desktop/Monopoly/Monopoly/Test/Test.csproj",
   "expectedPackageFiles": [
     "/Users/rainhu/.nuget/packages/coverlet.collector/3.2.0/coverlet.collector.3.2.0.nupkg.sha512",
     "/Users/rainhu/.nuget/packages/microsoft.codecoverage/17.5.0/microsoft.codecoverage.17.5.0.nupkg.sha512",

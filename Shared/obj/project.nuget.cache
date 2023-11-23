@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3DsVsBh0RVcHb2VVAcWE4C7wk2oAMQzjqvKG4608vCKM34p6nTt0H/c2C5nqywd9U73VW/dc1Z+Vg4moWggkzQ==",
+  "dgSpecHash": "u8qHYLBICKU1Iy3TFw0mFBRLLJXoxg3bn0uIpG7ZWn160LmRnnjcZZ6QDIt6Ovdr8ZRL3kI4h7nSj1NFdxUslg==",
   "success": true,
-  "projectFilePath": "/Users/rainhu/Desktop/Monopoly/Shared/Shared.csproj",
+  "projectFilePath": "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Shared.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

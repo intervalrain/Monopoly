@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net7.0": {}
+    "net7.0": {
+      "Shared/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/Shared.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Shared.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Shared/1.0.0": {
+      "type": "project",
+      "path": "../Shared/Shared.csproj",
+      "msbuildProject": "../Shared/Shared.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net7.0": []
+    "net7.0": [
+      "Shared >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "/Users/rainhu/.nuget/packages/": {}
@@ -13,11 +32,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/rainhu/Desktop/Monopoly/Server/Server.csproj",
+      "projectUniqueName": "/Users/rainhu/Desktop/Monopoly/Monopoly/Server/Server.csproj",
       "projectName": "Server",
-      "projectPath": "/Users/rainhu/Desktop/Monopoly/Server/Server.csproj",
+      "projectPath": "/Users/rainhu/Desktop/Monopoly/Monopoly/Server/Server.csproj",
       "packagesPath": "/Users/rainhu/.nuget/packages/",
-      "outputPath": "/Users/rainhu/Desktop/Monopoly/Server/obj/",
+      "outputPath": "/Users/rainhu/Desktop/Monopoly/Monopoly/Server/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/rainhu/.nuget/NuGet/NuGet.Config"
@@ -32,7 +51,11 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Shared.csproj": {
+              "projectPath": "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Shared.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

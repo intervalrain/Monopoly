@@ -598,6 +598,16 @@
             "related": ".xml"
           }
         }
+      },
+      "Shared/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/Shared.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Shared.dll": {}
+        }
       }
     }
   },
@@ -2292,6 +2302,11 @@
         "system.threading.tasks.4.3.0.nupkg.sha512",
         "system.threading.tasks.nuspec"
       ]
+    },
+    "Shared/1.0.0": {
+      "type": "project",
+      "path": "../Shared/Shared.csproj",
+      "msbuildProject": "../Shared/Shared.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -2299,6 +2314,7 @@
       "MSTest.TestAdapter >= 2.2.10",
       "MSTest.TestFramework >= 2.2.10",
       "Microsoft.NET.Test.Sdk >= 17.5.0",
+      "Shared >= 1.0.0",
       "coverlet.collector >= 3.2.0"
     ]
   },
@@ -2308,11 +2324,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/rainhu/Desktop/Monopoly/Test/Test.csproj",
+      "projectUniqueName": "/Users/rainhu/Desktop/Monopoly/Monopoly/Test/Test.csproj",
       "projectName": "Test",
-      "projectPath": "/Users/rainhu/Desktop/Monopoly/Test/Test.csproj",
+      "projectPath": "/Users/rainhu/Desktop/Monopoly/Monopoly/Test/Test.csproj",
       "packagesPath": "/Users/rainhu/.nuget/packages/",
-      "outputPath": "/Users/rainhu/Desktop/Monopoly/Test/obj/",
+      "outputPath": "/Users/rainhu/Desktop/Monopoly/Monopoly/Test/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/rainhu/.nuget/NuGet/NuGet.Config"
@@ -2326,7 +2342,11 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Shared.csproj": {
+              "projectPath": "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Shared.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

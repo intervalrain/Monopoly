@@ -9,49 +9,49 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Server
 build_property.RootNamespace = Server
-build_property.ProjectDir = /Users/rainhu/Desktop/Monopoly/Server/
+build_property.ProjectDir = /Users/rainhu/Desktop/Monopoly/Monopoly/Server/
 build_property.RazorLangVersion = 7.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = /Users/rainhu/Desktop/Monopoly/Server
+build_property.MSBuildProjectDirectory = /Users/rainhu/Desktop/Monopoly/Monopoly/Server
 build_property._RazorSourceGeneratorDebug = 
 
-[/Users/rainhu/Desktop/Monopoly/Server/App.razor]
+[/Users/rainhu/Desktop/Monopoly/Monopoly/Server/App.razor]
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/rainhu/Desktop/Monopoly/Server/Pages/Counter.razor]
+[/Users/rainhu/Desktop/Monopoly/Monopoly/Server/Pages/Counter.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQ291bnRlci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/rainhu/Desktop/Monopoly/Server/Pages/FetchData.razor]
+[/Users/rainhu/Desktop/Monopoly/Monopoly/Server/Pages/FetchData.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRmV0Y2hEYXRhLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/rainhu/Desktop/Monopoly/Server/Pages/Index.razor]
+[/Users/rainhu/Desktop/Monopoly/Monopoly/Server/Pages/Index.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvSW5kZXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/rainhu/Desktop/Monopoly/Server/Shared/SurveyPrompt.razor]
+[/Users/rainhu/Desktop/Monopoly/Monopoly/Server/Shared/SurveyPrompt.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1N1cnZleVByb21wdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/rainhu/Desktop/Monopoly/Server/_Imports.razor]
+[/Users/rainhu/Desktop/Monopoly/Monopoly/Server/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/rainhu/Desktop/Monopoly/Server/Shared/MainLayout.razor]
+[/Users/rainhu/Desktop/Monopoly/Monopoly/Server/Shared/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL01haW5MYXlvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-lqll0hj5fw
 
-[/Users/rainhu/Desktop/Monopoly/Server/Shared/NavMenu.razor]
+[/Users/rainhu/Desktop/Monopoly/Monopoly/Server/Shared/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL05hdk1lbnUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-5eyaqmyxj1
 
-[/Users/rainhu/Desktop/Monopoly/Server/Pages/Error.cshtml]
+[/Users/rainhu/Desktop/Monopoly/Monopoly/Server/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/rainhu/Desktop/Monopoly/Server/Pages/_Host.cshtml]
+[/Users/rainhu/Desktop/Monopoly/Monopoly/Server/Pages/_Host.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvX0hvc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

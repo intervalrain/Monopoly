@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/rainhu/Desktop/Monopoly/Shared/Shared.csproj",
+      "projectUniqueName": "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Shared.csproj",
       "projectName": "Shared",
-      "projectPath": "/Users/rainhu/Desktop/Monopoly/Shared/Shared.csproj",
+      "projectPath": "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Shared.csproj",
       "packagesPath": "/Users/rainhu/.nuget/packages/",
-      "outputPath": "/Users/rainhu/Desktop/Monopoly/Shared/obj/",
+      "outputPath": "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/rainhu/.nuget/NuGet/NuGet.Config"
