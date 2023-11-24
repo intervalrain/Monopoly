@@ -1,4 +1,5 @@
-﻿using Shared.Domain.Enums;
+﻿using Shared.Domain;
+using Shared.Domain.Enums;
 
 namespace Shared.Interfaces;
 
@@ -11,6 +12,7 @@ public interface IBlock
     IBlock? Left { get; } 
     IBlock? Right { get; }
     IBlock[] Neighbors { get; }
+    Contract Contract { get; } 
 
     void SetConnection(Direction dir, IBlock block);
     IBlock Next(Direction dir);

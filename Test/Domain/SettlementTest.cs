@@ -1,7 +1,6 @@
 ﻿using Shared.Domain;
-using Shared.Domain.Enums;
 
-namespace Shared.Usecases;
+namespace Test.Domain;
 
 [TestClass]
 public class SettlementTest

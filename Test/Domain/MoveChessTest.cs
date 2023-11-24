@@ -21,10 +21,10 @@ public class MoveChessTest
 		var a = new Player("A");
 
 		game.AddPlayer(a);
-        a.Init(map.FindBlockById("Start"), Direction.Left);
-        a.Move(6);
+		game.SetPlayerToBlock(a, "F4", Direction.Up);
+		game.MovePlayer(a, 6);
 
-		Assert.AreEqual(a.Position!.Id, "Prison");
+		Assert.AreEqual(a.Position!.Id, "A4");
 
 	}
 }

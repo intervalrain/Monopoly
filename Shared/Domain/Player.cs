@@ -25,7 +25,7 @@ public class Player
 		_position = null;
 	}
 
-	public void Init(IBlock positon, Direction direction)
+	public void SetPosition(IBlock positon, Direction direction)
 	{
 		_position = positon;
 		_direction = direction;
@@ -66,6 +66,17 @@ public class Player
 			var direction = currBlock.GetRelation(nextBlock);
 			_direction = direction;
 			_position = nextBlock;
+		}
+	}
+
+	public void BuyLand(IBlock block)
+	{
+		var contract = block.Contract;
+		if (contract.Owner != null) return;
+		if (Money > contract.Price)
+		{
+			AddMoney(-contract.Price);
+			contract.SetOwner(this);
 		}
 	}
 }

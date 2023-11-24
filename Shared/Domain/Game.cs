@@ -22,7 +22,7 @@ public class Game
 		if (_map != null)
 		{
             var start = _map.FindBlockById("Start");
-            player.Init(start, Direction.Down);
+            player.SetPosition(start, Direction.Down);
         }
 	}
 
@@ -31,6 +31,21 @@ public class Game
 		foreach (var player in players)
 			AddPlayer(player);
     }
+
+	public void SetPlayerToBlock(Player player, string blockId, Direction direction)
+	{
+		player.SetPosition(_map!.FindBlockById(blockId), direction);
+	}
+
+	public void MovePlayer(Player player, int moves)
+	{
+		player.Move(moves);
+	}
+
+	public void PlayerBuyLand(Player player, IBlock block)
+	{
+		player.BuyLand(block);
+	}
 
 	public void AllocateMoney(Player? player, int money)
 	{

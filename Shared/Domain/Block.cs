@@ -10,9 +10,11 @@ public class Block : IBlock
 	private Facility _facility;
 	private Dictionary<Direction, IBlock> _neigherBlocks = new();
 	private bool _stop;
+	private Contract _contract = new();
 
 	public string Id => _id;
 	public Facility Facility => _facility;
+	public Contract Contract => _contract; 
 
 	public IBlock? Up => _neigherBlocks.ContainsKey(Direction.Up) ? _neigherBlocks[Direction.Up] : null;
     public IBlock? Down => _neigherBlocks.ContainsKey(Direction.Down) ? _neigherBlocks[Direction.Down] : null;
