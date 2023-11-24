@@ -79,4 +79,9 @@ public class Player
 			contract.SetOwner(this);
 		}
 	}
+
+    public override string ToString()
+    {
+		return Id;
+    }
 }

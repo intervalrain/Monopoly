@@ -63,11 +63,23 @@ public class Game
 	{
 		if (!_players.ContainsKey(player.Id))
 			throw new KeyNotFoundException(player.Id);
-		return player.Position;
+		return player.Position!;
 	}
 
 	public List<Player> Settlement()
 	{
+		if (_map != null)
+		{
+            foreach (var block in _map!.Blocks)
+            {
+                var contract = block.Contract;
+                if (contract.Owner == null) continue;
+                var owner = contract.Owner;
+                owner.AddMoney(contract.Value);
+                contract.SetOwner(null);
+            }
+        }
+		
 		var left = _players.Where(p => p.Value.State == PlayerState.Normal)
 						   .Select(p => p.Value)
 						   .OrderBy(p => p.Money);

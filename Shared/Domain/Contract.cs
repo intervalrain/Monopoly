@@ -21,7 +21,7 @@ public class Contract
 		}
 	}
 
-    public void SetOwner(Player player)
+    public void SetOwner(Player? player)
     {
 		_owner = player;
     }

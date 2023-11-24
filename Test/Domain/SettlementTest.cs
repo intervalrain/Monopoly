@@ -1,4 +1,5 @@
 ﻿using Shared.Domain;
+using Shared.Domain.Maps;
 
 namespace Test.Domain;
 
@@ -53,6 +54,42 @@ public class SettlementTest
         Player d = new("D", 2000);
 
         game.AddPlayers(a, b, c, d);
+
+        var list = game.Settlement();
+
+        Assert.AreEqual(list[0], a);
+        Assert.AreEqual(list[1], b);
+        Assert.AreEqual(list[2], c);
+        Assert.AreEqual(list[3], d);
+    }
+
+    [TestMethod]
+    [Description(
+        """
+        Given: 玩家 ABCD 四人
+         When: 遊戲時間結束，
+               A 有 2500 元，與空地 A1
+               B 有 2000 元，與空地 B1
+               C 有 2500 元
+               D 有 2000 元
+         Then: 遊戲結算，排名 ABCD
+        """)]
+    public void 玩家ABCD_遊戲時間結束_按照房產與財產排名()
+    {
+        Map map = new Map(_7x7Map.Standard7x7); 
+        Game game = new(map);
+
+        Player a = new("A", 2500);
+        Player b = new("B", 2000);
+        Player c = new("C", 2500);
+        Player d = new("D", 2000);
+
+        game.AddPlayers(a, b, c, d);
+
+        var A1 = map.FindBlockById("A1");
+        var B1 = map.FindBlockById("B1");
+        A1.Contract.SetOwner(a);
+        B1.Contract.SetOwner(b);
 
         var list = game.Settlement();
 
