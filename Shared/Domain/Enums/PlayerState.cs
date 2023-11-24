@@ -1,5 +1,4 @@
-﻿using System;
-namespace Shared.Domain;
+﻿namespace Shared.Domain.Enums;
 
 public enum PlayerState
 {

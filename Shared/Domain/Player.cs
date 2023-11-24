@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Shared.Domain.Enums;
+using Shared.Interfaces;
+
 namespace Shared.Domain;
 
 public class Player
@@ -6,27 +8,64 @@ public class Player
 	private string _id;
 	private int _money;
 	private PlayerState _state;
+    private Direction _direction;
+    private IBlock? _position;
 
 	public string Id => _id;
 	public int Money => _money;
 	public PlayerState State => _state;
+	public Direction Direction => _direction; 
+	public IBlock? Position => _position;
 
-	public Player(string id, int init = 5000)
+    public Player(string id, int init = 5000)
 	{
 		_id = id;
 		_state = PlayerState.Normal;
 		_money = init;
+		_position = null;
+	}
+
+	public void Init(IBlock positon, Direction direction)
+	{
+		_position = positon;
+		_direction = direction;
 	}
 
 	public bool AddMoney(int money)
 	{
 		if (_money + money <= 0)
 		{
-			money = 0;
+			_money = 0;
 			_state = PlayerState.Bankrupt;
 			return true;
 		}
-		money += money;
+		_money += money;
 		return false;
+	}
+
+	public void Move(int moves)
+	{
+		while (moves-- > 0)
+		{
+			Move();
+		}
+	}
+
+	private void Move()
+	{
+		var currBlock = Position;
+		var currDirection = Direction;
+		var nextBlock = currBlock.Next(currDirection);
+
+		if (nextBlock == currBlock)
+		{
+			return;
+		}
+		else
+		{
+			var direction = currBlock.GetRelation(nextBlock);
+			_direction = direction;
+			_position = nextBlock;
+		}
 	}
 }

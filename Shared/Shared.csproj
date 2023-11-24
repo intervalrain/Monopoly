@@ -6,4 +6,16 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Domain\Enums\" />
+    <None Remove="Domain\Models\" />
+    <None Remove="Domain\Models\Blocks\" />
+    <None Remove="Domain\Maps\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Domain\Enums\" />
+    <Folder Include="Domain\Models\" />
+    <Folder Include="Domain\Models\Blocks\" />
+    <Folder Include="Domain\Maps\" />
+  </ItemGroup>
 </Project>

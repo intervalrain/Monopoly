@@ -1,9 +1,10 @@
 ﻿using Shared.Domain;
+using Shared.Domain.Enums;
 
 namespace Shared.Usecases;
 
 [TestClass]
-public class GameTest
+public class SettlementTest
 {
     [TestMethod]
     [Description(
@@ -27,10 +28,10 @@ public class GameTest
 
         var list = game.Settlement();
         
-        Assert.AreEqual(a, list[0]);
-        Assert.AreEqual(c, list[1]);
-        Assert.AreEqual(b, list[2]);
-    }
+        Assert.AreEqual(list[0], a);
+        Assert.AreEqual(list[1], c);
+        Assert.AreEqual(list[2], b);
+     }
 
     [TestMethod]
     [Description(
@@ -56,9 +57,9 @@ public class GameTest
 
         var list = game.Settlement();
 
-        Assert.AreEqual(a, list[0]);
-        Assert.AreEqual(b, list[1]);
-        Assert.AreEqual(c, list[2]);
-        Assert.AreEqual(d, list[3]);
+        Assert.AreEqual(list[0], a);
+        Assert.AreEqual(list[1], b);
+        Assert.AreEqual(list[2], c);
+        Assert.AreEqual(list[3], d);
     }
 }
