@@ -47,6 +47,11 @@ public class Game
 		player.BuyLand(block);
 	}
 
+	public void PlayerSellLand(Player player, IBlock block)
+	{
+		player.SellLand(block);
+	}
+
 	public void AllocateMoney(Player? player, int money)
 	{
 		if (player == null) return;

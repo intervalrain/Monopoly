@@ -80,6 +80,14 @@ public class Player
 		}
 	}
 
+    public void SellLand(IBlock block)
+    {
+        var contract = block.Contract;
+        if (contract.Owner != this) return;
+        AddMoney(contract.Value);
+        contract.SetOwner(null);
+    }
+
     public override string ToString()
     {
 		return Id;

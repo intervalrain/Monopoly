@@ -13,12 +13,7 @@ public class Contract
 
 	public void Upgrade()
 	{
-		if (_owner == null) return;
-		if (_owner.Money > _price)
-		{
-			_owner.AddMoney(-_price);
-			_level++;
-		}
+		_level++;
 	}
 
     public void SetOwner(Player? player)
