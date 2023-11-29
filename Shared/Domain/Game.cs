@@ -47,9 +47,16 @@ public class Game
 		player.BuyLand(block);
 	}
 
-	public void PlayerSellLand(Player player, IBlock block)
+	public void PlayerAuctionLand(Player player, IBlock block)
 	{
 		player.SellLand(block);
+	}
+
+	public void PlayerSellLand(Player buyee, Player buyer, IBlock block)
+	{
+		if (buyer.Money < block.Contract.Value) return;
+		buyee.SellLand(block);
+		buyer.BuyLand(block);
 	}
 
 	public void AllocateMoney(Player? player, int money)

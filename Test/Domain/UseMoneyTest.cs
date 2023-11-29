@@ -7,8 +7,6 @@ namespace Test.Domain;
 [TestClass]
 public class UseMoneyTest
 {
-
-
     [TestMethod]
     [Description(
         """

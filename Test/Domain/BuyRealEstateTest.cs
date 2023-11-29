@@ -88,14 +88,62 @@ public class BuyRealEstateTest
         var A1 = map.FindBlockById("A1");
         A1.Contract.SetOwner(a);
 
-        game.PlayerSellLand(a, A1);
+        game.PlayerAuctionLand(a, A1);
         Assert.AreEqual(null, A1.Contract.Owner);
         Assert.AreEqual(1800, a.Money);
     }
 
     [TestMethod]
     [Description(
-"""
+    """
+		Given: 玩家 A 有 800 元，玩家 B 有 5000 元
+		 When: A 販賣空地 A1 給 玩家 B
+		 Then: 空地屬於玩家 B，A 剩餘 1800 元，B 剩餘 4000 元
+		""")]
+    public void 玩家A販賣空地給玩家B()
+    {
+        Map map = new Map(_7x7Map.Standard7x7);
+        Game game = new Game(map);
+        Player a = new Player("A", 800);
+        Player b = new Player("B", 5000);
+
+        game.AddPlayers(a, b);
+        var A1 = map.FindBlockById("A1");
+        A1.Contract.SetOwner(a);
+
+        game.PlayerSellLand(a, b, A1);
+        Assert.AreEqual(b, A1.Contract.Owner);
+        Assert.AreEqual(1800, a.Money);
+        Assert.AreEqual(4000, b.Money);
+    }
+
+    [TestMethod]
+    [Description(
+    """
+		Given: 玩家 A 有 800 元，玩家 B 有 800 元
+		 When: A 販賣空地 A1 給 玩家 B
+		 Then: 空地屬於玩家 A，A 剩餘 800 元，B 剩餘 800 元
+		""")]
+    public void 玩家A販賣空地給玩家B但餘額不足()
+    {
+        Map map = new Map(_7x7Map.Standard7x7);
+        Game game = new Game(map);
+        Player a = new Player("A", 800);
+        Player b = new Player("B", 800);
+
+        game.AddPlayers(a, b);
+        var A1 = map.FindBlockById("A1");
+        A1.Contract.SetOwner(a);
+
+        game.PlayerSellLand(a, b, A1);
+        Assert.AreEqual(a, A1.Contract.Owner);
+        Assert.AreEqual(800, a.Money);
+        Assert.AreEqual(800, b.Money);
+    }
+
+    [TestMethod]
+    [Description(
+        """
 		Given: 玩家 A 有 800 元
 		 When: A 販賣有房地 A1 (level = 1)
 		 Then: 空地屬無主地，A 剩餘 1800 元
@@ -111,7 +159,7 @@ public class BuyRealEstateTest
         A1.Contract.SetOwner(a);
         A1.Contract.Upgrade();
 
-        game.PlayerSellLand(a, A1);
+        game.PlayerAuctionLand(a, A1);
         Assert.AreEqual(null, A1.Contract.Owner);
         Assert.AreEqual(2800, a.Money);
     }
