@@ -11,12 +11,13 @@ public class Player
     private Direction _direction;
     private IBlock? _position;
 
-	public string Id => _id;
+    public string Id => _id;
 	public int Money => _money;
 	public PlayerState State => _state;
 	public Direction Direction => _direction; 
 	public IBlock? Position => _position;
-
+	public int DiceNum { get; set; }
+	
     public Player(string id, int init = 5000)
 	{
 		_id = id;
@@ -41,6 +42,24 @@ public class Player
 		}
 		_money += money;
 		return false;
+	}
+
+	public Player Has(int money)
+	{
+		_money = money;
+		return this;
+	}
+
+	public Player Face(Direction direction)
+	{
+		_direction = direction;
+		return this;
+	}
+
+	public Player At(IBlock block)
+	{
+		_position = block;
+		return this;
 	}
 
 	public void Move(int moves)

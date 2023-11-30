@@ -16,7 +16,7 @@ public class BuyRealEstateTest
     public void 玩家A購買已被佔有的地()
     {
         Map map = new Map(_7x7Map.Standard7x7);
-        Game game = new Game(map);
+        Game game = new Game("003", map);
         Player a = new Player("A", 5000);
         Player b = new Player("B", 5000);
         game.AddPlayers(a, b);
@@ -39,7 +39,7 @@ public class BuyRealEstateTest
     public void 玩家A購買空地()
     {
         Map map = new Map(_7x7Map.Standard7x7);
-        Game game = new Game(map);
+        Game game = new Game("005", map);
         Player a = new Player("A", 5000);
         
         game.AddPlayer(a);
@@ -60,7 +60,7 @@ public class BuyRealEstateTest
     public void 玩家A財產不足無法買地()
     {
         Map map = new Map(_7x7Map.Standard7x7);
-        Game game = new Game(map);
+        Game game = new Game("008", map);
         Player a = new Player("A", 800);
 
         game.AddPlayer(a);
@@ -81,7 +81,7 @@ public class BuyRealEstateTest
     public void 玩家A販賣空地()
     {
         Map map = new Map(_7x7Map.Standard7x7);
-        Game game = new Game(map);
+        Game game = new Game("010", map);
         Player a = new Player("A", 800);
 
         game.AddPlayer(a);
@@ -103,7 +103,7 @@ public class BuyRealEstateTest
     public void 玩家A販賣空地給玩家B()
     {
         Map map = new Map(_7x7Map.Standard7x7);
-        Game game = new Game(map);
+        Game game = new Game("012", map);
         Player a = new Player("A", 800);
         Player b = new Player("B", 5000);
 
@@ -127,7 +127,7 @@ public class BuyRealEstateTest
     public void 玩家A販賣空地給玩家B但餘額不足()
     {
         Map map = new Map(_7x7Map.Standard7x7);
-        Game game = new Game(map);
+        Game game = new Game("013", map);
         Player a = new Player("A", 800);
         Player b = new Player("B", 800);
 
@@ -151,7 +151,7 @@ public class BuyRealEstateTest
     public void 玩家A販賣房屋與地()
     {
         Map map = new Map(_7x7Map.Standard7x7);
-        Game game = new Game(map);
+        Game game = new Game("014", map);
         Player a = new Player("A", 800);
 
         game.AddPlayer(a);

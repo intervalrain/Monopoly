@@ -16,7 +16,7 @@ public class UseMoneyTest
         """)]
     public void 玩家ABCD_財產易動()
     {
-        Game game = new();
+        Game game = new("004");
 
         Player a = new("A");
         Player b = new("B");
@@ -45,7 +45,7 @@ public class UseMoneyTest
         """)]
     public void 玩家ABC_花錢_BC財產不足_BC破產()
     {
-        Game game = new();
+        Game game = new("009");
 
         Player a = new("A");
         Player b = new("B");

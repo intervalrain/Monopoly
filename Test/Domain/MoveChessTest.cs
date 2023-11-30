@@ -17,7 +17,7 @@ public class MoveChessTest
 	public void 玩家擲到6點_目前在F4_移動到Prison()
 	{
 		Map map = new Map(_7x7Map.Standard7x7); 
-		Game game = new Game(map);
+		Game game = new Game("002", map);
 		var a = new Player("A");
 
 		game.AddPlayer(a);

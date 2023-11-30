@@ -15,7 +15,7 @@ public class SettlementTest
         """)]
     public void 玩家ABC_BC破產_遊戲結算_名次為ACB()
     {
-        Game game = new();
+        Game game = new("001");
 
         Player a = new("A");
         Player b = new("B");
@@ -46,7 +46,7 @@ public class SettlementTest
         """)]
     public void 玩家ABCD_遊戲時間結束_按照財產排名()
     {
-        Game game = new();
+        Game game = new("006");
 
         Player a = new("A", 5000);
         Player b = new("B", 4000);
@@ -77,7 +77,7 @@ public class SettlementTest
     public void 玩家ABCD_遊戲時間結束_按照房產與財產排名()
     {
         Map map = new Map(_7x7Map.Standard7x7); 
-        Game game = new(map);
+        Game game = new("011", map);
 
         Player a = new("A", 2500);
         Player b = new("B", 2000);

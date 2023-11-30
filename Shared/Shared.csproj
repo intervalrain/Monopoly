@@ -11,11 +11,15 @@
     <None Remove="Domain\Models\" />
     <None Remove="Domain\Models\Blocks\" />
     <None Remove="Domain\Maps\" />
+    <None Remove="Repositories\" />
+    <None Remove="Usecases\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Domain\Enums\" />
     <Folder Include="Domain\Models\" />
     <Folder Include="Domain\Models\Blocks\" />
     <Folder Include="Domain\Maps\" />
+    <Folder Include="Repositories\" />
+    <Folder Include="Usecases\" />
   </ItemGroup>
 </Project>
