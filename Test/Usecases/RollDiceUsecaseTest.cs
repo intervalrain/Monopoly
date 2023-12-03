@@ -1,6 +1,7 @@
 ﻿using Shared.Domain;
 using Shared.Usecases;
 using Server.Repositories;
+using Test.Common;
 
 namespace Test.Usecases;
 
@@ -19,6 +20,7 @@ public class RollDiceUsecaseTest
             new CreateGameUsecase.Input(GameId, new[] { PlayerId }),
             new CreateGameUsecase.Presenter());
         Game game = repo.FindGameById(GameId);
+        game.SetDice(Utils.MockDice(2, 3));
         repo.Save(game);
 
         RollDiceUsecase.Input input = new(GameId, PlayerId);

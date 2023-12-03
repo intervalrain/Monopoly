@@ -62,6 +62,15 @@ public class Player
 		return this;
 	}
 
+	public int RollDice(IDice?[] dices)
+	{
+		foreach (var dice in dices)
+		{
+			dice.Roll();
+		}
+		return dices.Sum(d => d.Value);
+	}
+
 	public void Move(int moves)
 	{
 		while (moves-- > 0)

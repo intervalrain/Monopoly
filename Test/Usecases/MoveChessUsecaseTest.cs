@@ -1,7 +1,9 @@
 ﻿using Shared.Domain;
 using Shared.Domain.Enums;
 using Shared.Usecases;
+using Shared.Interfaces;
 using Server.Repositories;
+using Test.Common;
 
 namespace Test.Usecases;
 
@@ -26,9 +28,14 @@ public class MoveChessUsecaseTest
 			new CreateGameUsecase.Input(GameId, new[] {PlayerId}),
 			new CreateGameUsecase.Presenter());
 		Game game = repo.FindGameById(GameId);
-		game.SetDice(5);
+		IDice[]? dices = Utils.MockDice(2, 3);
 		Player player = game.GetPlayerById(PlayerId);
 		game.SetPlayerToBlock(player, "Start", Direction.Up);
+		game.SetDice(Utils.MockDice(2, 3));
+		new RollDiceUsecase(repo).Execute(
+			new RollDiceUsecase.Input(GameId, PlayerId),
+			new RollDiceUsecase.Presenter());
+
 		repo.Save(game);
 
 		MoveChessUsecase.Input input = new(GameId, PlayerId);

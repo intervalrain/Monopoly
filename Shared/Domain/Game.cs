@@ -10,12 +10,14 @@ public class Game
 	private List<Player> _rank = new();
 	private Map? _map;
 	private string _id;
+	private IDice[] _dices;
 	
 	public List<Player> Players => _players.Select(p => p.Value).ToList();
 	public List<Player> Rank => _rank; 
 	public string Id => _id;
 	public int CurrentDice { get; set; }
 	public Player CurrentPlayer { get; set; }
+	public IDice[] Dices => _dices;
 
 	public Game(string id, Map? map = null)
 	{
@@ -106,29 +108,22 @@ public class Game
 		return _players[playerId];
 	}
 
-	public void SetDice(int num)
-	{
-		CurrentDice = num;
-	}
-
 	public void PlayerMoveChess()
 	{
 		Player player = CurrentPlayer;
 		player.Move(CurrentDice);
 	}
 
+	public void SetDice(IDice[]? dices = null)
+	{
+		_dices = dices;
+	}
+
 	public void PlayerRollDice(string playerId)
 	{
-        Player player = GetPlayerById(playerId);
-		int sum = 0;
-		for (int i = 0; i < player.DiceNum; i++)
-		{
-			var dice = new Dice();
-			dice.Roll();
-			sum += dice.Value;
-		}
-		CurrentDice = sum;
-    }
+		var player = GetPlayerById(playerId);
+		CurrentDice = player.RollDice(Dices);
+	}
 
 	public List<Player> Settlement()
 	{
