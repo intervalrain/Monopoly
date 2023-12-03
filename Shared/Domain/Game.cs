@@ -120,9 +120,14 @@ public class Game
 	public void PlayerRollDice(string playerId)
 	{
         Player player = GetPlayerById(playerId);
-		Dice dice = new Dice(player.DiceNum);
-		dice.Roll();
-		CurrentDice = dice.steps;
+		int sum = 0;
+		for (int i = 0; i < player.DiceNum; i++)
+		{
+			var dice = new Dice();
+			dice.Roll();
+			sum += dice.Value;
+		}
+		CurrentDice = sum;
     }
 
 	public List<Player> Settlement()

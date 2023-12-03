@@ -1,7 +1,7 @@
 ﻿using Shared.Domain;
 using Shared.Domain.Enums;
 using Shared.Usecases;
-using Test.Utils;
+using Test.Common;
 
 namespace Test.Usecases;
 

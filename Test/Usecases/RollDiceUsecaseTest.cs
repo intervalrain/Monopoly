@@ -1,8 +1,6 @@
-﻿
-using Shared.Domain;
-using Shared.Domain.Maps;
+﻿using Shared.Domain;
 using Shared.Usecases;
-using Test.Utils;
+using Test.Common;
 
 namespace Test.Usecases;
 

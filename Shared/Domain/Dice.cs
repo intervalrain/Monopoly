@@ -1,24 +1,13 @@
-﻿namespace Shared.Domain;
+﻿using Shared.Interfaces;
 
-public class Dice
+namespace Shared.Domain;
+
+public class Dice : IDice
 {
-	private int _diceNum;
-	private int _steps;
+    public int Value { get; private set; }
 
-	public int DiceNum => _diceNum;
-	public int steps => _steps;
-
-	public Dice(int num)
-	{
-		_diceNum = num;
-	}
-
-	public void Roll()
-	{
-		_steps = 0;
-		for (int i = 0; i < _diceNum; i++)
-		{
-            _steps += new Random().Next(1, 7);
-        }
-	}
+    public void Roll()
+    {
+        Value = new Random().Next(1, 6);
+    }
 }

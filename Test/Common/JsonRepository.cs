@@ -1,13 +1,10 @@
-﻿using System;
-using System.Security.Cryptography;
-using System.Text.Json;
+﻿using System.Text.Json;
 using Shared.Domain;
 using Shared.Domain.Enums;
 using Shared.Domain.Maps;
-using Shared.Interfaces;
 using Shared.Repositories;
 
-namespace Test.Utils;
+namespace Test.Common;
 
 public class JsonRepository : IRepository
 {
