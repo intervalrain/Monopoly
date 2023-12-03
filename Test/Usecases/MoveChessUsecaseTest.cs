@@ -1,7 +1,7 @@
 ﻿using Shared.Domain;
 using Shared.Domain.Enums;
 using Shared.Usecases;
-using Test.Common;
+using Server.Repositories;
 
 namespace Test.Usecases;
 
@@ -21,7 +21,7 @@ public class MoveChessUsecaseTest
 		const string GameId = "g1";
 		const string PlayerId = "p1";
 
-		var repo = new JsonRepository();
+		var repo = new InMemoryRepository();
 		new CreateGameUsecase(repo).Execute(
 			new CreateGameUsecase.Input(GameId, new[] {PlayerId}),
 			new CreateGameUsecase.Presenter());

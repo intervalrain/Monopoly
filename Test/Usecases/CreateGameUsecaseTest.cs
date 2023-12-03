@@ -1,7 +1,7 @@
 ﻿using Shared.Domain;
 using Shared.Domain.Maps;
 using Shared.Usecases;
-using Test.Common;
+using Server.Repositories;
 
 namespace Test.Usecases;
 
@@ -21,7 +21,7 @@ public class CreateGameUsecaseTest
         var presenter = new CreateGameUsecase.Presenter();
 
         // Act
-        var usecase = new CreateGameUsecase(new JsonRepository());
+        var usecase = new CreateGameUsecase(new InMemoryRepository());
         usecase.Execute(input, presenter);
 
         // Assert

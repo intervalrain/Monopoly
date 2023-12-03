@@ -1,6 +1,6 @@
 ﻿using Shared.Domain;
 using Shared.Usecases;
-using Test.Common;
+using Server.Repositories;
 
 namespace Test.Usecases;
 
@@ -14,7 +14,7 @@ public class RollDiceUsecaseTest
         const string GameId = "g1";
         const string PlayerId = "p1";
 
-        var repo = new JsonRepository();
+        var repo = new InMemoryRepository();
         new CreateGameUsecase(repo).Execute(
             new CreateGameUsecase.Input(GameId, new[] { PlayerId }),
             new CreateGameUsecase.Presenter());
@@ -25,7 +25,7 @@ public class RollDiceUsecaseTest
         var presenter = new RollDiceUsecase.Presenter();
 
         // Act
-        var usecase = new RollDiceUsecase(new JsonRepository());
+        var usecase = new RollDiceUsecase(repo);
 
         usecase.Execute(input, presenter);
     }
