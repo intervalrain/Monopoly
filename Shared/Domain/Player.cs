@@ -73,9 +73,11 @@ public class Player
 
 	public void Move(int moves)
 	{
-		while (moves-- > 0)
+		while (moves > 0)
 		{
-			Move();
+            if (moves > 0 && Position.Id == "Start") AddMoney(3000);
+            Move();
+			moves--;
 		}
 	}
 

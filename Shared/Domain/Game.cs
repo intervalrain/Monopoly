@@ -112,6 +112,7 @@ public class Game
 	{
 		Player player = CurrentPlayer;
 		player.Move(CurrentDice);
+		CurrentDice = 0;
 	}
 
 	public void SetDice(IDice[]? dices = null)

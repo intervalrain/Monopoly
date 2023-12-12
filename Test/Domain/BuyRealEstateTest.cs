@@ -33,7 +33,7 @@ public class BuyRealEstateTest
     [Description(
     """
 		Given: 玩家 A 有 5000 元
-		 When: A 購買空地 A1
+		 When: A 購買價值1000的空地 A1
 		 Then: 空地屬於 A，A 剩餘 4000 元
 		""")]
     public void 玩家A購買空地()
@@ -54,7 +54,7 @@ public class BuyRealEstateTest
     [Description(
     """
 		Given: 玩家 A 有 800 元
-		 When: A 購買空地 A1
+		 When: A 購買價值1000的空地 A1
 		 Then: 空地仍屬無主地，A 剩餘 800 元
 		""")]
     public void 玩家A財產不足無法買地()
@@ -75,7 +75,7 @@ public class BuyRealEstateTest
     [Description(
     """
 		Given: 玩家 A 有 800 元
-		 When: A 販賣空地 A1
+		 When: A 販賣價值1000的空地 A1
 		 Then: 空地屬無主地，A 剩餘 1800 元
 		""")]
     public void 玩家A販賣空地()
@@ -97,7 +97,7 @@ public class BuyRealEstateTest
     [Description(
     """
 		Given: 玩家 A 有 800 元，玩家 B 有 5000 元
-		 When: A 販賣空地 A1 給 玩家 B
+		 When: A 販賣價值1000的空地 A1 給玩家 B
 		 Then: 空地屬於玩家 B，A 剩餘 1800 元，B 剩餘 4000 元
 		""")]
     public void 玩家A販賣空地給玩家B()
@@ -121,7 +121,7 @@ public class BuyRealEstateTest
     [Description(
     """
 		Given: 玩家 A 有 800 元，玩家 B 有 800 元
-		 When: A 販賣空地 A1 給 玩家 B
+		 When: A 販賣價值1000的空地 A1 給玩家 B
 		 Then: 空地屬於玩家 A，A 剩餘 800 元，B 剩餘 800 元
 		""")]
     public void 玩家A販賣空地給玩家B但餘額不足()
