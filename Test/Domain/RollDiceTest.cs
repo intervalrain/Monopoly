@@ -27,7 +27,7 @@ public class RollDiceTest
 
 		IDice[]? dices = Utils.MockDice(2, 4);
 		game.SetDice(dices);
-		game.PlayerRollDice(a.Id);
+		game.PlayerRollDice();
 		game.PlayerMoveChess();
 
 		Assert.AreEqual("A4", game.GetPlayerPosition(a).Id);
@@ -49,7 +49,7 @@ public class RollDiceTest
 		IDice[]? dices = Utils.MockDice(4);
 		game.SetDice(dices);
 		
-		game.PlayerRollDice(a.Id);
+		game.PlayerRollDice();
 		game.PlayerMoveChess();
 
 		Assert.AreEqual("A1", game.GetPlayerPosition(a).Id);
@@ -73,7 +73,7 @@ public class RollDiceTest
         IDice[]? dices = Utils.MockDice(3);
         game.SetDice(dices);
 
-        game.PlayerRollDice(a.Id);
+        game.PlayerRollDice();
         game.PlayerMoveChess();
 
         Assert.AreEqual("Start", game.GetPlayerPosition(a).Id);

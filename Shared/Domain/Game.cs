@@ -1,5 +1,6 @@
 ﻿using Shared.Domain.Enums;
 using Shared.Domain.Maps;
+using Shared.Domain.Models.Blocks;
 using Shared.Interfaces;
 
 namespace Shared.Domain;
@@ -120,10 +121,9 @@ public class Game
 		_dices = dices;
 	}
 
-	public void PlayerRollDice(string playerId)
+	public void PlayerRollDice()
 	{
-		var player = GetPlayerById(playerId);
-		CurrentDice = player.RollDice(Dices);
+		CurrentDice = CurrentPlayer.RollDice(Dices);
 	}
 
 	public List<Player> Settlement()
@@ -149,5 +149,43 @@ public class Game
 		}
 		_rank.Reverse();
 		return _rank;
+	}
+
+    public void PayToll()
+    {
+		var location = CurrentPlayer.Position;
+		if (location?.Contract.Owner == CurrentPlayer ||
+            location?.Contract.Owner == null ||
+			location?.Contract.Owner.Position is Prison ||
+			location?.Contract.Owner.Position is ParkingLot) return;
+		var payer = CurrentPlayer;
+		var payee = location.Contract.Owner;
+		var amount = CalculateToll(location);
+		payer.Pay(payee, amount);
+    }
+
+	private int CalculateToll(IBlock location)
+	{
+		var chainRate = new double[] { 0, 1, 1.3, 2, 4, 8, 10 };
+		
+		if (location is Land)
+		{
+			var chain = (from block in _map?.Blocks
+						 where block is Land
+						 where block.Id.StartsWith(location.Id[0])
+						 where block.Contract.Owner == location.Contract.Owner
+						 select block).Count();
+			return (int)(location.Contract.Toll * chainRate[chain]);
+        }
+		else if (location is Station)
+		{
+			var chain = (from block in _map?.Blocks
+						 where block is Station
+						 where block.Contract.Owner == location.Contract.Owner
+						 select block).Count();
+            return (int)(location.Contract.Toll * chainRate[chain]);
+        }
+		else
+			return 0;
 	}
 }

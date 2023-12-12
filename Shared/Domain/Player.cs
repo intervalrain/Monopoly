@@ -44,6 +44,21 @@ public class Player
 		return false;
 	}
 
+	public void Pay(Player b, int money)
+	{
+		if (_money <= money)
+		{
+			b.AddMoney(_money);
+			_money = 0;
+			_state = PlayerState.Bankrupt;
+		}
+		else
+		{
+			b.AddMoney(money);
+			_money -= money;
+		}
+	}
+
 	public Player Has(int money)
 	{
 		_money = money;

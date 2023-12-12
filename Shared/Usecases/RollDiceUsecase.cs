@@ -16,7 +16,7 @@ public class RollDiceUsecase
         // 查
         var game = _repository.FindGameById(input.GameId);
         // 改
-        game.PlayerRollDice(input.PlayerId);
+        game.PlayerRollDice();
         // 存
         _repository.Save(game);
         // 推
