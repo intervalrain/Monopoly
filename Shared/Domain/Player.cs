@@ -88,9 +88,10 @@ public class Player
 
 	public void Move(int moves)
 	{
+		bool startFromStart = Position?.Id == "Start";
 		while (moves > 0)
 		{
-            if (moves > 0 && Position.Id == "Start") AddMoney(3000);
+            if (moves > 0 && Position?.Id == "Start" && !startFromStart) AddMoney(3000);
             Move();
 			moves--;
 		}
@@ -114,10 +115,17 @@ public class Player
 		}
 	}
 
-	public void BuyLand(IBlock block)
+	public void BuyLand(IBlock block, bool sell = false)
 	{
 		var contract = block.Contract;
-		if (contract.Owner != null) return;
+		if (contract.Owner != null)
+		{
+			throw new Exception("非空地");
+		}
+		if (Position != block && !sell)
+		{
+			throw new Exception("無法購買非腳下的土地");
+		}
 		if (Money > contract.Price)
 		{
 			AddMoney(-contract.Price);

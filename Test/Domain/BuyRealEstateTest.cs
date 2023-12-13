@@ -1,4 +1,5 @@
 ﻿using Shared.Domain;
+using Shared.Domain.Enums;
 using Shared.Domain.Maps;
 
 namespace Test.Domain;
@@ -23,7 +24,7 @@ public class BuyRealEstateTest
 		var A1 = map.FindBlockById("A1");
 		A1.Contract.SetOwner(b);
 
-		game.PlayerBuyLand(a, A1);
+        Assert.ThrowsException<Exception>(() => game.PlayerBuyLand(a, A1), "非空地");
 		Assert.AreEqual(b.Id, A1.Contract.Owner!.Id);
         Assert.AreEqual(5000, a.Money);
         Assert.AreEqual(5000, b.Money);
@@ -43,6 +44,7 @@ public class BuyRealEstateTest
         Player a = new Player("A", 5000);
         
         game.AddPlayer(a);
+        game.SetPlayerToBlock(a, "A1", Direction.Up);
         var A1 = map.FindBlockById("A1");
 
         game.PlayerBuyLand(a, A1);
@@ -65,6 +67,7 @@ public class BuyRealEstateTest
 
         game.AddPlayer(a);
         var A1 = map.FindBlockById("A1");
+        game.SetPlayerToBlock(a, A1.Id, Direction.Up);
 
         game.PlayerBuyLand(a, A1);
         Assert.AreEqual(null, A1.Contract.Owner);
@@ -162,5 +165,65 @@ public class BuyRealEstateTest
         game.PlayerAuctionLand(a, A1);
         Assert.AreEqual(null, A1.Contract.Owner);
         Assert.AreEqual(2800, a.Money);
+    }
+
+    [TestMethod]
+    [Description(
+        """
+        Given: 玩家A資產5000元，沒有房地產
+               玩家B資產5000元,擁有房地產F4
+               目前輪到A，A在F4上
+        When:  玩家A購買土地F4
+        Then:  顯示錯誤訊息"非空地"
+               玩家A持有金額為5000,持有房地產數量為0
+               玩家B持有金額為5000,持有房地產數量為1,持有F4
+        """)]
+    public void 無法購買非空地土地()
+    {
+        // Arragne
+        Map map = new Map(_7x7Map.Standard7x7);
+        Game game = new Game("G11", map);
+        Player a = new Player("A");
+        Player b = new Player("B");
+        game.AddPlayers(a, b);
+        game.SetPlayerToBlock(a, "F4", Direction.Up);
+        var F4 = map.FindBlockById("F4");
+        F4.Contract.SetOwner(b);
+
+        // Act
+        Assert.ThrowsException<Exception>(() => game.PlayerBuyLand(a, F4), "非空地");
+
+        // Assert
+        Assert.AreEqual(5000, a.Money);
+        Assert.AreEqual(0, map.GetLandCount(a));
+        Assert.AreEqual(5000, b.Money);
+        Assert.AreEqual(1, map.GetLandCount(b));
+        Assert.AreEqual(b, F4.Contract.Owner);
+    }
+    [TestMethod]
+    [Description(
+    """
+        Given:  玩家A資產5000元，沒有房地產
+                目前輪到A，A在F2上
+        When:   玩家A購買土地F4
+        Then:   顯示錯誤訊息"必須在購買的土地上才可以購買"
+                玩家A持有金額為5000,持有房地產數量為0
+        """)]
+    public void 無法購買非腳下的土地()
+    {
+        // Arrange
+        Map map = new Map(_7x7Map.Standard7x7);
+        Game game = new Game("G12", map);
+        Player a = new Player("A", 5000);
+        game.AddPlayer(a);
+        game.SetPlayerToBlock(a, "F2", Direction.Up);
+
+        // Act
+        var F4 = map.FindBlockById("F4");
+        Assert.ThrowsException<Exception>(() => game.PlayerBuyLand(a, F4), "無法購買非腳下的土地");
+
+        // Assert
+        Assert.AreEqual(5000, a.Money);
+        Assert.AreEqual(0, map.GetLandCount(a));
     }
 }

@@ -77,7 +77,7 @@ public class Game
 	{
 		if (buyer.Money < block.Contract.Value) return;
 		buyee.SellLand(block);
-		buyer.BuyLand(block);
+		buyer.BuyLand(block, sell: true);
 	}
 
 	public void AllocateMoney(Player? player, int money)

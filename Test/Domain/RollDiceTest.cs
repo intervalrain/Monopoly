@@ -66,7 +66,7 @@ public class RollDiceTest
     public void 玩家擲骰後移動棋子到起點無法獲得獎勵金()
     {
         Map map = new Map(_7x7Map.Standard7x7);
-        Game game = new Game("G01", map);
+        Game game = new Game("G02", map);
         var a = new Player("a", 1000);
         game.AddPlayer(a);
         game.SetPlayerToBlock(a, "F3", Direction.Up);
@@ -77,6 +77,30 @@ public class RollDiceTest
         game.PlayerMoveChess();
 
         Assert.AreEqual("Start", game.GetPlayerPosition(a).Id);
+        Assert.AreEqual(0, game.CurrentDice);
+        Assert.AreEqual(1000, a.Money);
+    }
+    [TestMethod]
+    [Description(
+    """
+		Given: 玩家A目前在Start，持有1000元
+		 When: 玩家擲到3點
+		 Then: 玩家移動到Start，玩家持有1000元
+		""")]
+    public void 玩家擲骰後從起點出法無法獲得獎勵金()
+    {
+        Map map = new Map(_7x7Map.Standard7x7);
+        Game game = new Game("G03", map);
+        var a = new Player("a", 1000);
+        game.AddPlayer(a);
+        game.SetPlayerToBlock(a, "Start", Direction.Up);
+        IDice[]? dices = Utils.MockDice(3);
+        game.SetDice(dices);
+
+        game.PlayerRollDice();
+        game.PlayerMoveChess();
+
+        Assert.AreEqual("A2", game.GetPlayerPosition(a).Id);
         Assert.AreEqual(0, game.CurrentDice);
         Assert.AreEqual(1000, a.Money);
     }

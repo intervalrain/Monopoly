@@ -23,6 +23,11 @@ public class Map
 		return _blockMapping[id];
 	}
 
+	public int GetLandCount(Player p)
+	{
+		return Blocks.Where(b => b.Contract.Owner == p).Count();
+	}
+
 	private void MakeConnection()
 	{
 		object[][] dirc = new object[4][]
