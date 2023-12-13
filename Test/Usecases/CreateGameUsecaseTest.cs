@@ -1,6 +1,6 @@
-﻿using Shared.Domain;
-using Shared.Domain.Maps;
-using Shared.Usecases;
+﻿using Domain;
+using Domain.Maps;
+using Domain.Usecases;
 using Server.Repositories;
 
 namespace Test.Usecases;

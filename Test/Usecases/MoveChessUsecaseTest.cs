@@ -1,7 +1,7 @@
-﻿using Shared.Domain;
-using Shared.Domain.Enums;
-using Shared.Usecases;
-using Shared.Interfaces;
+﻿using Domain;
+using Domain.Enums;
+using Domain.Usecases;
+using Domain.Interfaces;
 using Server.Repositories;
 using Test.Common;
 

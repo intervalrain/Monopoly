@@ -1182,11 +1182,21 @@
           }
         }
       },
+      "Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Domain.dll": {}
+        }
+      },
       "Server/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
-          "Shared": "1.0.0"
+          "Domain": "1.0.0"
         },
         "compile": {
           "bin/placeholder/Server.dll": {}
@@ -1197,16 +1207,6 @@
         "frameworkReferences": [
           "Microsoft.AspNetCore.App"
         ]
-      },
-      "Shared/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v7.0",
-        "compile": {
-          "bin/placeholder/Shared.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Shared.dll": {}
-        }
       }
     }
   },
@@ -3640,26 +3640,26 @@
         "system.threading.tasks.nuspec"
       ]
     },
+    "Domain/1.0.0": {
+      "type": "project",
+      "path": "../Shared/Domain.csproj",
+      "msbuildProject": "../Shared/Domain.csproj"
+    },
     "Server/1.0.0": {
       "type": "project",
       "path": "../Server/Server.csproj",
       "msbuildProject": "../Server/Server.csproj"
-    },
-    "Shared/1.0.0": {
-      "type": "project",
-      "path": "../Shared/Shared.csproj",
-      "msbuildProject": "../Shared/Shared.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0": [
       "AspNetCore.SignalR.UnitTestingSupport.Common >= 7.0.0",
+      "Domain >= 1.0.0",
       "MSTest.TestAdapter >= 2.2.10",
       "MSTest.TestFramework >= 2.2.10",
       "Microsoft.NET.Test.Sdk >= 17.5.0",
       "Moq >= 4.20.70",
       "Server >= 1.0.0",
-      "Shared >= 1.0.0",
       "coverlet.collector >= 3.2.0"
     ]
   },
@@ -3692,8 +3692,8 @@
             "/Users/rainhu/Desktop/Monopoly/Monopoly/Server/Server.csproj": {
               "projectPath": "/Users/rainhu/Desktop/Monopoly/Monopoly/Server/Server.csproj"
             },
-            "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Shared.csproj": {
-              "projectPath": "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Shared.csproj"
+            "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Domain.csproj": {
+              "projectPath": "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Domain.csproj"
             }
           }
         }

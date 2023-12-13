@@ -1,5 +1,5 @@
 ﻿using Moq;
-using Shared.Interfaces;
+using Domain.Interfaces;
 
 namespace Test.Common;
 

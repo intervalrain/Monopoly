@@ -1,5 +1,4 @@
-﻿using System;
-namespace Shared.Interfaces;
+﻿namespace Domain.Interfaces;
 
 public interface IDice
 {

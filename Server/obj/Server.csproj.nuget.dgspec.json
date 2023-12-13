@@ -20,6 +20,7 @@
           "net7.0"
         ],
         "sources": {
+          "/usr/local/share/dotnet/library-packs": {},
           "/usr/local/share/dotnet/sdk/7.0.311/Sdks/Microsoft.NET.Sdk.Web/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -27,8 +28,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Shared.csproj": {
-                "projectPath": "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Shared.csproj"
+              "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Domain.csproj": {
+                "projectPath": "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Domain.csproj"
               }
             }
           }
@@ -65,12 +66,12 @@
         }
       }
     },
-    "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Shared.csproj": {
+    "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Shared.csproj",
-        "projectName": "Shared",
-        "projectPath": "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Shared.csproj",
+        "projectUniqueName": "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Domain.csproj",
+        "projectName": "Domain",
+        "projectPath": "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Domain.csproj",
         "packagesPath": "/Users/rainhu/.nuget/packages/",
         "outputPath": "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/obj/",
         "projectStyle": "PackageReference",
@@ -81,6 +82,7 @@
           "net7.0"
         ],
         "sources": {
+          "/usr/local/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

@@ -1,9 +1,8 @@
-﻿using System;
-using Shared.Domain;
-using Shared.Domain.Maps;
-using Shared.Domain.Enums;
+﻿using Domain;
+using Domain.Maps;
+using Domain.Enums;
 using Test.Common;
-using Shared.Domain.Models.Blocks;
+
 
 namespace Test.Domain;
 

@@ -1,5 +1,5 @@
-﻿using Shared.Domain;
-using Shared.Repositories;
+﻿using Domain;
+using Domain.Repositories;
 
 namespace Server.Repositories;
 

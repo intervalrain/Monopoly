@@ -1,8 +1,6 @@
-﻿using System;
-using Shared.Domain;
-using Shared.Repositories;
+﻿using Domain.Repositories;
 
-namespace Shared.Usecases;
+namespace Domain.Usecases;
 
 public class CreateGameUsecase
 {

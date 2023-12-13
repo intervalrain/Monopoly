@@ -1,5 +1,5 @@
-﻿using Shared.Domain;
-using Shared.Domain.Maps;
+﻿using Domain;
+using Domain.Maps;
 
 namespace Test.Domain;
 

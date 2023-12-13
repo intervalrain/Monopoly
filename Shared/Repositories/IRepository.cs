@@ -1,6 +1,4 @@
-﻿using Shared.Domain;
-
-namespace Shared.Repositories;
+﻿namespace Domain.Repositories;
 
 public interface IRepository
 {

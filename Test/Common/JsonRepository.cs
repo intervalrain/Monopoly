@@ -1,8 +1,8 @@
 ﻿using System.Text.Json;
-using Shared.Domain;
-using Shared.Domain.Enums;
-using Shared.Domain.Maps;
-using Shared.Repositories;
+using Domain;
+using Domain.Enums;
+using Domain.Maps;
+using Domain.Repositories;
 
 namespace Test.Common;
 

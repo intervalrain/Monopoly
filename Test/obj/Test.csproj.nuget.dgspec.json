@@ -28,8 +28,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Shared.csproj": {
-                "projectPath": "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Shared.csproj"
+              "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Domain.csproj": {
+                "projectPath": "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Domain.csproj"
               }
             }
           }
@@ -66,12 +66,12 @@
         }
       }
     },
-    "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Shared.csproj": {
+    "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Shared.csproj",
-        "projectName": "Shared",
-        "projectPath": "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Shared.csproj",
+        "projectUniqueName": "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Domain.csproj",
+        "projectName": "Domain",
+        "projectPath": "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Domain.csproj",
         "packagesPath": "/Users/rainhu/.nuget/packages/",
         "outputPath": "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/obj/",
         "projectStyle": "PackageReference",
@@ -146,8 +146,8 @@
               "/Users/rainhu/Desktop/Monopoly/Monopoly/Server/Server.csproj": {
                 "projectPath": "/Users/rainhu/Desktop/Monopoly/Monopoly/Server/Server.csproj"
               },
-              "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Shared.csproj": {
-                "projectPath": "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Shared.csproj"
+              "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Domain.csproj": {
+                "projectPath": "/Users/rainhu/Desktop/Monopoly/Monopoly/Shared/Domain.csproj"
               }
             }
           }

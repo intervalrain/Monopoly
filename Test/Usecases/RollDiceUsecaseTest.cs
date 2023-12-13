@@ -1,5 +1,5 @@
-﻿using Shared.Domain;
-using Shared.Usecases;
+﻿using Domain;
+using Domain.Usecases;
 using Server.Repositories;
 using Test.Common;
 

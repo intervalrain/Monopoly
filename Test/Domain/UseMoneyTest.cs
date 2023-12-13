@@ -1,6 +1,5 @@
-﻿using System;
-using Shared.Domain;
-using Shared.Domain.Enums;
+﻿using Domain;
+using Domain.Enums;
 
 namespace Test.Domain;
 

@@ -1,8 +1,7 @@
-﻿using System;
-using Shared.Domain;
-using Shared.Domain.Enums;
-using Shared.Domain.Maps;
-using Shared.Interfaces;
+﻿using Domain;
+using Domain.Enums;
+using Domain.Maps;
+using Domain.Interfaces;
 using Test.Common;
 
 namespace Test.Domain;

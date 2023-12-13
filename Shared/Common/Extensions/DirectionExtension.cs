@@ -1,6 +1,6 @@
-﻿using Shared.Domain.Enums;
+﻿using Domain.Enums;
 
-namespace Shared.Common.Extensions;
+namespace Domain.Common.Extensions;
 
 public static class DirectionExtension
 {

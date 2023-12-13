@@ -1,6 +1,6 @@
-﻿using Shared.Domain;
-using Shared.Domain.Enums;
-using Shared.Domain.Maps;
+﻿using Domain;
+using Domain.Enums;
+using Domain.Maps;
 
 namespace Test.Domain;
 

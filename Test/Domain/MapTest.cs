@@ -1,7 +1,6 @@
-﻿
-using Shared.Domain;
-using Shared.Domain.Maps;
-using Shared.Interfaces;
+﻿using Domain;
+using Domain.Maps;
+using Domain.Interfaces;
 
 namespace Test.Domain;
 
