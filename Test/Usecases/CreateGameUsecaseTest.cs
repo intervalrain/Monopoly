@@ -1,32 +1,34 @@
-﻿using Domain;
-using Domain.Maps;
-using Domain.Usecases;
-using Server.Repositories;
+﻿using Application.Common;
+using Domain.Events;
+using Microsoft.AspNetCore.SignalR.Client;
+using Test.Common;
 
 namespace Test.Usecases;
 
 [TestClass]
 public class CreateGameUsecaseTest
 {
+    private TestServer server;
+    private IRepository repository;
+
+    [TestInitialize]
+    public void Setup()
+    {
+        server = new TestServer();
+        repository = server.GetRequiredService<IRepository>();
+    }
     [TestMethod]
-    public void 初始化遊戲_共四人遊戲()
+    public async void 初始化遊戲_共四人遊戲()
     {
         // Arrange
-        const string GameId = "g1";
-        string[] PlayerIds = new[] { "p1", "p2", "p3", "p4" };
-
-        Map map = new Map(_7x7Map.Standard7x7);
-        Game game = new Game(GameId, map);
-        CreateGameUsecase.Input input = new(GameId, PlayerIds);
-        var presenter = new CreateGameUsecase.Presenter();
+        var hub = server.CreateHubConnection();
+        var verification = hub.Verify<GameCreatedEvent>("GameCreatedEvent", Timeout: 5000);
 
         // Act
-        var usecase = new CreateGameUsecase(new InMemoryRepository());
-        usecase.Execute(input, presenter);
+        await hub.SendAsync("CreateGame", "a");
 
         // Assert
-        Assert.AreEqual("g1", presenter.GameId);
-        Assert.AreEqual(4, presenter.PlayerNum);
+        await verification.Verify(e => e.GameId == "1");
 
     }
 }

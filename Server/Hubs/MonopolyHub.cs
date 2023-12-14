@@ -1,16 +1,17 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Application.Usecases;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Server.Hubs;
 
-public class MonopolyHub : Hub
+public class MonopolyHub : Hub<IMonopolyResponse>
 {
-	public async Task SendMessage(string user, string message)
+	public async Task CreateGame(string gameId, string userId, CreateGameUsecase usecase)
 	{
-		await Clients.All.SendAsync("ReceiveMessage", user, message);
+		await usecase.ExecuteAsync(new CreateGameRequest(gameId, userId));
 	}
 
-	public async Task PlayerRollDice(string gameId, string userId)
+	public async Task PlayerRollDice(string gameId, string userId, RollDiceUsecase usecase)
 	{
-		await Clients.Group(gameId).SendAsync("PlayerRollDice", userId, 6);
+		await usecase.ExecuteAsync(new RollDiceRequest(gameId, userId));
 	}
 }

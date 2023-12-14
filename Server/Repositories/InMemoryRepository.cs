@@ -1,5 +1,5 @@
-﻿using Domain;
-using Domain.Repositories;
+﻿using Application.Common;
+using Domain;
 
 namespace Server.Repositories;
 
@@ -10,11 +10,17 @@ public class InMemoryRepository : IRepository
 	public Game FindGameById(string id)
 	{
 		Games.TryGetValue(id, out Game? game);
+		if (game == null)
+		{
+			throw new GameNotFoundException(id);
+		}
 		return game;
 	}
 
-	public void Save(Game game)
+	public string Save(Game game)
 	{
+		game.Id ??= (Games.Count + 1).ToString();
 		Games[game.Id] = game;
+		return game.Id;
 	}
 }

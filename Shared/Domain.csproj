@@ -7,16 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Repositories\" />
-    <None Remove="Usecases\" />
     <None Remove="Enums\" />
     <None Remove="Maps\" />
     <None Remove="Models\" />
     <None Remove="Events\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Repositories\" />
-    <Folder Include="Usecases\" />
     <Folder Include="Enums\" />
     <Folder Include="Maps\" />
     <Folder Include="Models\" />

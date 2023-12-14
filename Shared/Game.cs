@@ -13,10 +13,10 @@ public class Game : AbstractAggregateRoot
 	private Map? _map;
 	private string _id;
 	private IDice[] _dices;
-	
+
 	public List<Player> Players => _players.Select(p => p.Value).ToList();
-	public List<Player> Rank => _rank; 
-	public string Id => _id;
+	public List<Player> Rank => _rank;
+	public string Id { get; set; }
 	public int CurrentDice { get; set; }
 	public Player CurrentPlayer { get; set; }
 	public IDice[] Dices => _dices;

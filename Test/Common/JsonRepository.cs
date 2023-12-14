@@ -2,7 +2,7 @@
 using Domain;
 using Domain.Enums;
 using Domain.Maps;
-using Domain.Repositories;
+using Application.Common;
 
 namespace Test.Common;
 
@@ -27,7 +27,7 @@ public class JsonRepository : IRepository
         return game;
     }
 
-    public void Save(Game game)
+    public string Save(Game game)
     {
         List<JsonPlayer> players = game.Players.Select(p => new JsonPlayer()
         {
@@ -47,6 +47,7 @@ public class JsonRepository : IRepository
         };
         string text = JsonSerializer.Serialize(jsonGame);
         File.WriteAllText($"./{game.Id}.json", text);
+        return game.Id;
     }
 
     internal class JsonGame

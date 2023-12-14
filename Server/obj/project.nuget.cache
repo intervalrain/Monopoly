@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "IUQdTAh9hO/aNwaZAppvfPlL8solV0Rz5O7BWcgd+rfY3i8uXKq6sRUGnWGj8iazejdfvAMFLh4BzWKydDyRYA==",
+  "dgSpecHash": "oaCJ6npQ3TD4+IMTjTi9u5VtZGM+Sb9aAQGbc9MCGOpwgX83tBsR5h95nq+Kn7LHXm34Usv1aJtK1YS53ATqGQ==",
   "success": true,
   "projectFilePath": "/Users/rainhu/Desktop/Monopoly/Monopoly/Server/Server.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/Users/rainhu/.nuget/packages/microsoft.extensions.dependencyinjection/8.0.0/microsoft.extensions.dependencyinjection.8.0.0.nupkg.sha512",
+    "/Users/rainhu/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/8.0.0/microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512"
+  ],
   "logs": []
 }
