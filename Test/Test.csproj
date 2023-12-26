@@ -16,4 +16,12 @@
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="DomainTests\" />
+    <None Remove="ServerTests\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DomainTests\" />
+    <Folder Include="ServerTests\" />
+  </ItemGroup>
 </Project>
