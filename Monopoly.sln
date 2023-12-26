@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 25.0.1706.7
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monopoly", "Monopoly\Monopoly.csproj", "{75516E2D-8E1B-4633-B778-5C843E2118F4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{4C372A37-7E42-43A7-A587-F440B6F24A8C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{5852ED66-CF44-4AD1-8BDF-4C81ACF57F38}"
+	ProjectSection(SolutionItems) = preProject
+		Backend - Build and Deploy.yml = Backend - Build and Deploy.yml
+		Front-End.yml = Front-End.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".vscode", ".vscode", "{9054516F-A4B7-488D-8AED-F80005A63056}"
+	ProjectSection(SolutionItems) = preProject
+		launch.json = launch.json
+		settings.json = settings.json
+		tasks.json = tasks.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{65725142-CFCA-4782-BF56-1DA57BE98999}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		.gitignore = .gitignore
+		Dockerfile.cs = Dockerfile.cs
+		fly.toml = fly.toml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{75516E2D-8E1B-4633-B778-5C843E2118F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75516E2D-8E1B-4633-B778-5C843E2118F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75516E2D-8E1B-4633-B778-5C843E2118F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75516E2D-8E1B-4633-B778-5C843E2118F4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6B3AA7CC-5D07-42B5-B266-A84B0C86FC73}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5852ED66-CF44-4AD1-8BDF-4C81ACF57F38} = {4C372A37-7E42-43A7-A587-F440B6F24A8C}
+	EndGlobalSection
+EndGlobal
