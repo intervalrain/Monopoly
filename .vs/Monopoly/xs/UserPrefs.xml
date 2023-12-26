@@ -1,4 +1,9 @@
-﻿<Properties StartupConfiguration="{75516E2D-8E1B-4633-B778-5C843E2118F4}|Default">
+﻿<Properties GitUserInfo="UsingGIT" StartupConfiguration="{F82A51BA-6328-469E-AD5D-92097961355C}|Default">
+  <MonoDevelop.Ide.ItemProperties.Application FirstBuild="True" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.ItemProperties.Client FirstBuild="True" />
+  <MonoDevelop.Ide.ItemProperties.Domain FirstBuild="True" />
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.ItemProperties.Monopoly FirstBuild="True" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.ItemProperties.Server FirstBuild="True" />
+  <MonoDevelop.Ide.ItemProperties.SharedLibrary FirstBuild="True" />
+  <MonoDevelop.Ide.ItemProperties.Test FirstBuild="True" />
 </Properties>
