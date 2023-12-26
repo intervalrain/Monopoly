@@ -1,11 +1,13 @@
-﻿using System;
-namespace Application
-{
-	public class 
-	{
-		public ()
-		{
-		}
-	}
-}
+﻿# directories
+**/bin/
+**/obj/
+**/out/
 
+# files
+fly.toml
+Dockerfile*
+**/*.md
+
+# project
+Client/
+Test/

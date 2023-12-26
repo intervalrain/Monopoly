@@ -1,11 +1,107 @@
-﻿using System;
-namespace Application
-{
-	public class Backend___Build_and_Deploy
-	{
-		public Backend___Build_and_Deploy()
-		{
-		}
-	}
-}
+﻿name: Backend - Build and Deploy
 
+on:
+  push:
+    branches: [main, develop, devops]
+    paths-ignore:
+        - "Client/**" #偵測目錄
+        - ".github/workflows/Front-End.yml" #偵測檔案"
+  pull_request:
+  
+
+env:
+  DOTNET_VERSION: '8.0.x'
+  DOTNET_APP_SOURCE_PATH: '.'
+  #DOTNET_APP_PUBLISH_PROJECT_PATH: './src/BackEnd/src/InterfaceAdapter/WebApi'
+
+jobs:
+  build:
+    name: Build, Test and Publish Artifact
+    runs-on: ubuntu-latest
+    steps:
+    # Checkout the repo
+    - name: git checkout
+      uses: actions/checkout@v3
+    
+    # Setup .NET SDK
+    - name: setup .NET SDK ${{ env.DOTNET_VERSION }}
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+  
+    # Run dotnet build and test
+    - name: dotnet restore, build and test
+      working-directory: ${{ env.DOTNET_APP_SOURCE_PATH }}
+      run: |
+        dotnet restore
+        dotnet build -c Release --no-restore
+        dotnet test -c Release --no-build --verbosity normal
+    # Run dotnet publish
+    #- name: dotnet publish
+    #  if: github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'master')
+    #  run: |
+    #      dotnet publish ${{ env.DOTNET_APP_PUBLISH_PROJECT_PATH }} -c Release -r linux-x64 --no-self-contained -o publish/backend /p:DebugType=None /p:DebugSymbols=false
+    # Upload Artifact
+    #- name: Upload Artifact
+    #  if: github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'master')
+    #  uses: actions/upload-artifact@v3
+    #  with:
+    #    name: backend-app
+    #    path: publish/backend
+
+    # Dump GitHub Context
+    - name: dump gitHub context
+      run: |
+        echo '```' >> $GITHUB_STEP_SUMMARY
+        echo '${{ toJSON(env) }}' >> $GITHUB_STEP_SUMMARY
+        echo '${{ toJSON(github) }}' >> $GITHUB_STEP_SUMMARY
+        echo '```' >> $GITHUB_STEP_SUMMARY
+  deploy:
+    name: Deploy app
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: flyctl deploy --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+    
+  #   # Display file structures
+  #   - name: Display structure of downloaded files
+  #     run: ls -R
+  
+  #   # Deploy to Azure App Service
+  #   - name: Deploy to Azure App Service
+  #     uses: azure/webapps-deploy@v2
+  #     with:
+  #       app-name: ${{ env.AZURE_WEBAPP_NAME }}
+  #       publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+  #       package: './backend-app'
+  
+  # deploy-production:
+  #   name: Deploy Production
+  #   if: github.ref_name == 'main' && github.event_name == 'push'
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   environment: production
+  #   env:
+  #     AZURE_WEBAPP_NAME: 'werewolf-api-dev'
+  #   steps:
+  #   # Download Artifact
+  #   - name: Download Artifact
+  #     uses: actions/download-artifact@v3
+  #     with:
+  #       name: backend-app
+  #       path: ./backend-app
+    
+  #   # Display file structures
+  #   - name: Display structure of downloaded files
+  #     run: ls -R
+  
+  #   # Deploy to Azure App Service
+  #   - name: Deploy to Azure App Service
+  #     uses: azure/webapps-deploy@v2
+  #     with:
+  #       app-name: ${{ env.AZURE_WEBAPP_NAME }}
+  #       publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+  #       package: './backend-app'
