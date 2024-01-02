@@ -1,5 +1,4 @@
-﻿using Application.DataModels;
-
+﻿using Domain;
 namespace Application.Common;
 
 public interface IRepository

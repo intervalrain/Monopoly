@@ -14,14 +14,32 @@
     <PackageReference Include="MSTest.TestAdapter" Version="3.0.4" />
     <PackageReference Include="MSTest.TestFramework" Version="3.0.4" />
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
+    <PackageReference Include="Moq" Version="4.20.69" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="DomainTests\" />
     <None Remove="ServerTests\" />
+    <None Remove="DomainTests\Testcases\" />
+    <None Remove="ServerTests\AcceptanceTests\" />
+    <None Remove="ServerTests\Usecases\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DomainTests\" />
     <Folder Include="ServerTests\" />
+    <Folder Include="DomainTests\Testcases\" />
+    <Folder Include="ServerTests\AcceptanceTests\" />
+    <Folder Include="ServerTests\Usecases\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Application\Application.csproj" />
+    <ProjectReference Include="..\Server\Server.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="..\Domain\Events\PlayerNeedToChooseDirectionEvent.cs" />
   </ItemGroup>
 </Project>

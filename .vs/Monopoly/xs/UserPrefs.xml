@@ -1,9 +1,48 @@
-﻿<Properties GitUserInfo="UsingGIT" StartupConfiguration="{F82A51BA-6328-469E-AD5D-92097961355C}|Default">
-  <MonoDevelop.Ide.ItemProperties.Application FirstBuild="True" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.ItemProperties.Client FirstBuild="True" />
-  <MonoDevelop.Ide.ItemProperties.Domain FirstBuild="True" />
-  <MultiItemStartupConfigurations />
+﻿<Properties StartupConfiguration="{F82A51BA-6328-469E-AD5D-92097961355C}|Default" GitUserInfo="UsingGIT">
   <MonoDevelop.Ide.ItemProperties.Server FirstBuild="True" />
-  <MonoDevelop.Ide.ItemProperties.SharedLibrary FirstBuild="True" />
+  <MonoDevelop.Ide.ItemProperties.Application PreferredExecutionTarget="MonoDevelop.Default" FirstBuild="True" />
   <MonoDevelop.Ide.ItemProperties.Test FirstBuild="True" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.Client FirstBuild="True" />
+  <MonoDevelop.Ide.ItemProperties.SharedLibrary FirstBuild="True" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Domain/LandContract.cs">
+    <Files>
+      <File FileName="Test/ServerTests/MonopolyTestServer.cs" Line="1" Column="1" IsPinned="True" />
+      <File FileName="Domain/Monopoly.cs" Line="31" Column="29" IsPinned="True" />
+      <File FileName="Server/Repositories/InMemoryRepository.cs" />
+      <File FileName="Application/Common/IEventBus.cs" Line="1" Column="1" />
+      <File FileName="Application/Common/IPresenter.cs" Line="3" Column="32" />
+      <File FileName="Application/Common/IRepository.cs" Line="10" Column="2" />
+      <File FileName="Domain/Common/DomainEvent.cs" Line="1" Column="1" />
+      <File FileName="Domain/Interfaces/IDice.cs" Line="1" Column="1" />
+      <File FileName="Test/DomainTests/Testcases/GameInitialTest.cs" Line="15" Column="16" />
+      <File FileName="Domain/Builders/PlayerBuilder.cs" Line="107" Column="11" />
+      <File FileName="Domain/Player.cs" Line="45" Column="55" />
+      <File FileName="Domain/LandContract.cs" Line="20" Column="22" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Monopoly">
+            <Node name="Domain">
+              <Node name="Builders" expanded="True" />
+              <Node name="Common" expanded="True" />
+              <Node name="Models" expanded="True" />
+              <Node name="LandContract.cs" selected="True" />
+            </Node>
+            <Node name="Test">
+              <Node name="DomainTests" expanded="True" />
+              <Node name="ServerTests" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.ItemProperties.Domain FirstBuild="True" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
 </Properties>
