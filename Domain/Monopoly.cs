@@ -28,7 +28,7 @@ public class Monopoly : AbstractAggregationRoot
 		_map = map;
 		HostId = hostId;
 		_currentPlayerState = currentPlayerState;
-		Dices = dices ?? new IDices[2] { new Dice(), new Dice() };
+		Dices = dices ?? new IDice[2] { new Dice(), new Dice() };
 		Rounds = rounds;
 	}
 }

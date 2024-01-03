@@ -18,5 +18,6 @@ public class GameInitialTest
         var d = new Player("D");
 
         var map = Map;
+        
     }
 }
