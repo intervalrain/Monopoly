@@ -1,39 +1,42 @@
-﻿<Properties StartupConfiguration="{F82A51BA-6328-469E-AD5D-92097961355C}|Default" GitUserInfo="UsingGIT">
-  <MonoDevelop.Ide.ItemProperties.Server FirstBuild="True" />
-  <MonoDevelop.Ide.ItemProperties.Application PreferredExecutionTarget="MonoDevelop.Default" FirstBuild="True" />
-  <MonoDevelop.Ide.ItemProperties.Test FirstBuild="True" />
+﻿<Properties StartupConfiguration="{8553F12D-61AB-41A8-B5CE-31BD8A5EA8AE}|https" GitUserInfo="UsingGIT">
+  <MonoDevelop.Ide.ItemProperties.Application PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.ItemProperties.Test PreferredExecutionTarget="MonoDevelop.Default" FirstBuild="True" />
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.ItemProperties.Client FirstBuild="True" />
-  <MonoDevelop.Ide.ItemProperties.SharedLibrary FirstBuild="True" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Domain/LandContract.cs">
+  <MonoDevelop.Ide.ItemProperties.Client PreferredExecutionTarget="/Applications/Microsoft Edge.app" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Client/Program.cs">
     <Files>
       <File FileName="Test/ServerTests/MonopolyTestServer.cs" Line="1" Column="1" IsPinned="True" />
-      <File FileName="Domain/Monopoly.cs" Line="31" Column="29" IsPinned="True" />
+      <File FileName="Domain/Monopoly.cs" Line="69" Column="17" IsPinned="True" />
       <File FileName="Server/Repositories/InMemoryRepository.cs" />
-      <File FileName="Application/Common/IEventBus.cs" Line="1" Column="1" />
-      <File FileName="Application/Common/IPresenter.cs" Line="3" Column="32" />
-      <File FileName="Application/Common/IRepository.cs" Line="10" Column="2" />
-      <File FileName="Domain/Common/DomainEvent.cs" Line="1" Column="1" />
-      <File FileName="Domain/Interfaces/IDice.cs" Line="1" Column="1" />
-      <File FileName="Test/DomainTests/Testcases/GameInitialTest.cs" Line="15" Column="16" />
-      <File FileName="Domain/Builders/PlayerBuilder.cs" Line="107" Column="11" />
-      <File FileName="Domain/Player.cs" Line="45" Column="55" />
-      <File FileName="Domain/LandContract.cs" Line="20" Column="22" />
+      <File FileName="Application/Common/IEventBus.cs" />
+      <File FileName="Application/Common/IPresenter.cs" />
+      <File FileName="Application/Common/IRepository.cs" />
+      <File FileName="Domain/Interfaces/IDice.cs" />
+      <File FileName="Test/DomainTests/Testcases/GameInitialTest.cs" Line="12" Column="10" />
+      <File FileName="Domain/Builders/MonopolyBuilder.cs" />
+      <File FileName="Domain/Models/Jail.cs" />
+      <File FileName="Client/Program.cs" Line="6" Column="1" />
+      <File FileName="Domain/Program.cs" Line="6" Column="27" />
+      <File FileName="Server/Program.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="Monopoly">
-            <Node name="Domain">
-              <Node name="Builders" expanded="True" />
-              <Node name="Common" expanded="True" />
-              <Node name="Models" expanded="True" />
-              <Node name="LandContract.cs" selected="True" />
-            </Node>
-            <Node name="Test">
-              <Node name="DomainTests" expanded="True" />
+          <Node name="Monopoly" expanded="True">
+            <Node name="Client" selected="True" />
+            <Node name="Test" expanded="True">
+              <Node name="DomainTests" expanded="True">
+                <Node name="Testcases" expanded="True" />
+              </Node>
               <Node name="ServerTests" expanded="True" />
             </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.UnitTesting.TestPad">
+        <State name="__root__">
+          <Node name="Monopoly" expanded="True">
+            <Node name="Test" expanded="True" selected="True" />
           </Node>
         </State>
       </Pad>
@@ -41,8 +44,9 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/rainhu/Projects/Monopoly/Test/DomainTests/Testcases/GameInitialTest.cs" relfile="Test/DomainTests/Testcases/GameInitialTest.cs" line="17" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.ItemProperties.Domain FirstBuild="True" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
 </Properties>

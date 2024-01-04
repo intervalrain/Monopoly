@@ -54,4 +54,13 @@ public class Player
 			_ => 0
 		};
 	}
+
+	internal void StartRound()
+	{
+		EndRoundFlag = true;
+		if (SuspendRounds > 0)
+		{
+			SuspendRounds--;
+		}
+	}
 }

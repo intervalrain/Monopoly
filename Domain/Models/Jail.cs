@@ -2,7 +2,7 @@
 
 public class Jail : Block
 {
-	public Jail(string id) : base(ids)
+	public Jail(string id) : base(id)
 	{
 	}
 }

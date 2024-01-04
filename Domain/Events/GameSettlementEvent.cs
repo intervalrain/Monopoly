@@ -2,4 +2,4 @@
 
 namespace Domain.Events;
 
-public record GameSettleEvent(int Rounds, params Player[] Players) : DomainEvent;
+public record GameSettlementEvent(int Rounds, params Player[] Players) : DomainEvent;

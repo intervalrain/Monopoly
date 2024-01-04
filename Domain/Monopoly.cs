@@ -1,5 +1,7 @@
 ﻿using Domain.Common;
 using Domain.Interfaces;
+using Domain.Events;
+using Domain.Builders;
 
 namespace Domain;
 
@@ -13,6 +15,7 @@ public class Monopoly : AbstractAggregationRoot
 	public string Id { get; set; }
 	public GameStage GameStage { get; private set; }
 	public int[]? CurrentDice { get; set; } = null;
+	public Player CurrentPlayer => _currentPlayer; 
 	public CurrentPlayerState CurrentPlayerState => _currentPlayerState;
 	public IDice[] Dices { get; set; }
 	public ICollection<Player> Players => _players.AsReadOnly();
@@ -31,4 +34,39 @@ public class Monopoly : AbstractAggregationRoot
 		Dices = dices ?? new IDice[2] { new Dice(), new Dice() };
 		Rounds = rounds;
 	}
+
+	public void AddPlayer(Player player, string blockId = "Start", Direction  direction  = Direction.Right)
+	{
+		Chess chess = new(player, blockId, direction, 0);
+		player.Chess = chess;
+		_players.Add(player);
+	}
+
+	public void Settlement()
+	{
+		var PropertyCalculate = (Player player) =>
+			player.Money + player.LandContractList.Where(l => !l.InMortgage).Sum(l => (l.Land.House + 1) * l.Land.Price);
+		var players = _players.OrderByDescending(PropertyCalculate).ThenByDescending(p => p.BankruptRounds).ToArray();
+		AddDomainEvent(new GameSettlementEvent(Rounds, players));
+	}
+
+	public Block GetPlayerPosition(string playerId)
+	{
+		Player player = GetPlayer(playerId);
+		return _map.FindBlockById(player.Chess.CurrentBlockId);
+	}
+
+	public void Initial()
+	{
+		_currentPlayerState = new CurrentPlayerStateBuilder(_players[0].Id).Build(null);
+		CurrentPlayer.StartRound();
+	}
+
+    #region Private Functions 
+    private Player GetPlayer(string id)
+	{
+		var player = _players.Find(p => p.Id == id) ?? throw new Exception("找不到玩家");
+		return player; 
+	}
+    #endregion
 }
