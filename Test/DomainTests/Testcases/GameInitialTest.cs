@@ -2,7 +2,7 @@
 using Domain.Builders;
 using Domain.Maps;
 
-namespace Test.DomainTests;
+namespace Test.DomainTests.Testcases;
 
 [TestClass]
 public class GameInitialTest
