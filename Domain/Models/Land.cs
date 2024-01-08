@@ -1,4 +1,7 @@
-﻿namespace Domain.Models;
+﻿using Domain.Common;
+using Domain.Events;
+
+namespace Domain.Models;
 
 public class Land : Block
 {
@@ -19,6 +22,54 @@ public class Land : Block
     {
         _price = price;
         _lot = lot;
+        _landContract = new LandContract(null, this);
+    }
+
+    public virtual void Upgrate()
+    {
+        _house++;
+    }
+
+    internal List<DomainEvent> PayToll(Player player)
+    {
+        Player? owner = _landContract.Owner;
+        var events = new List<DomainEvent>();
+
+        if (player.EndRoundFlag || owner.SuspendRounds > 0)
+        {
+            events.Add(new PlayerDoesntNeedToPayTollEvent(player.Id, player.Money));
+        }
+        else 
+        {
+            decimal amount = CalculateToll(owner);
+
+            if (player.Money > amount)
+            {
+                player.EndRoundFlag = true;
+                player.PayToll(owner, amount);
+                events.Add(new PlayerPayTollEvent(player.Id, player.Money, owner.Id, owner.Money));
+            }
+            else
+            {
+                if (!player.LandContractList.Any(l => l.InMortgage))
+                {
+                    player.PayToll(owner, player.Money);
+                    events.Add(new PlayerPayTollEvent(player.Id, player.Money, owner.Id, owner.Money));
+                    events.Add(player.UpdateState());
+                }
+                else
+                {
+                    events.Add(new PlayerTooPoorToPayTollEvent(player.Id, player.Money, amount));
+                }
+            }
+        }
+        return events;
+    }
+
+    internal virtual decimal CalculateToll(Player owner)
+    {
+        int lotCount = owner.LandContractList.Count(t => t.Land.Lot == Lot);
+        return _price * RATE_OF_HOUSE[_house] * RATE_OF_LOT[lotCount];
     }
 
     internal decimal GetPrice(LandUsage usage)
@@ -33,16 +84,60 @@ public class Land : Block
         };
     }
 
-    public virtual void Upgrate()
-    {
-        _house++;
-    }
-
     internal override Player? GetOwner() => _landContract.Owner;
 
     internal override void UpdateOwner(Player? owner)
     {
         _landContract.Owner = owner;
+    }
+
+    internal virtual DomainEvent BuildHouse(Player player)
+    {
+        if (_house >= MAX_HOUSE)
+        {
+            return new HouseMaxEvent(player.Id, Id, _house);
+        }
+        else
+        {
+            player.Money -= _price;
+            _house++;
+            return new PlayerBuildHouseEvent(player.Id, Id, player.Money, _house);
+        }
+    }
+
+    internal override DomainEvent OnBlockEvent(Player player)
+    {
+        Player? owner = GetOwner();
+        var land = this;
+        if (owner is null)
+        {
+            return new PlayerCanBuyLandEvent(player.Id, Id, land.Price);
+        }
+        else if (owner == player)
+        {
+            if (player.LandContractList.Any(l => l.Land.Id == Id && !l.InMortgage))
+            {
+                return new PlayerCanBuildHouseEvent(player.Id, land.Id, land.House, land.Price);
+            }
+        }
+        else if (owner!.SuspendRounds <= 0)
+        {
+            return new PlayerNeedsToPayTollEvent(player.Id, owner.Id, land.CalculateToll(owner));
+        }
+        return DomainEvent.EmptyEvent;
+    }
+
+    internal override void DoBlockAction(Player player)
+    {
+        Player? owner = GetOwner();
+        if (owner is null)
+        {
+            return;
+        }
+        if (owner.SuspendRounds <= 0)
+        {
+            player.EndRoundFlag = false;
+        }
     }
 }
 

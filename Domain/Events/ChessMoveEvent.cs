@@ -2,4 +2,4 @@
 
 namespace Domain.Events;
 
-public record ChessMoveEvent(string PlayerId, string BlockId, string Direction, int RemainingSteps) : DomainEvent;
+public record ChessMovedEvent(string PlayerId, string BlockId, Direction Direction, int RemainingSteps) : DomainEvent;

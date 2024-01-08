@@ -1,4 +1,6 @@
-﻿namespace Domain;
+﻿using Domain.Common;
+
+namespace Domain;
 
 public abstract class Block
 {
@@ -42,4 +44,7 @@ public abstract class Block
     {
         throw new Exception("此地不可購買!");
     }
+
+    internal abstract DomainEvent OnBlockEvent(Player player);
+    internal abstract void DoBlockAction(Player player);
 }

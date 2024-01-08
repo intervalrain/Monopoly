@@ -50,4 +50,9 @@ public static class DomainEventExtension
 		}
 		return domainEvents.Skip(1);
 	}
+
+	public static void NoMore(this IEnumerable<DomainEvent> domainEvents)
+	{
+		Assert.IsFalse(domainEvents.Any(), string.Join('\n', domainEvents));
+	}
 }

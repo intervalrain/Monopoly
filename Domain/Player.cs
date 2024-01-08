@@ -1,4 +1,7 @@
-﻿using Domain.Models;
+﻿using Domain.Common;
+using Domain.Events;
+using Domain.Interfaces;
+using Domain.Models;
 
 namespace Domain;
 
@@ -28,6 +31,21 @@ public class Player
 		RoleId = roleId;
 	}
 
+	internal DomainEvent UpdateState()
+	{
+		if (Money <= 0 && !LandContractList.Any(l => !l.InMortgage))
+		{
+			State = PlayerState.Bankrupt;
+			foreach (var landContract in LandContractList)
+			{
+				RemoveLandContract(landContract);
+			}
+			EndRoundFlag = true;
+			return new PlayerBankruptEvent(Id);
+		}
+		return DomainEvent.EmptyEvent;
+	}
+
 	public void AddLandContract(LandContract landContract)
 	{
 		_landContractList.Add(landContract);
@@ -55,6 +73,17 @@ public class Player
 		};
 	}
 
+	public List<DomainEvent> EndRound()
+	{
+		List<DomainEvent> events = new();
+		_landContractList.ForEach(l =>
+		{
+			events.Add(l.EndRound());
+		});
+		_landContractList.RemoveAll(l => l.DeadLine == 0);
+		return events;
+	}
+
 	internal void StartRound()
 	{
 		EndRoundFlag = true;
@@ -63,4 +92,24 @@ public class Player
 			SuspendRounds--;
 		}
 	}
+
+	internal IEnumerable<DomainEvent> RollDice(Map map, IDice[] dices)
+	{
+		foreach (var dice in dices)
+		{
+			dice.Roll();
+		}
+		yield return new PlayerRolledDiceEvent(Id, dices.Sum(d => d.Value));
+		foreach (var e in Chess.Move(map, dices.Sum(dice => dice.Value)))
+		{
+			yield return e;
+		}
+    }
+		
+	internal void PayToll(Player owner, decimal amount)
+	{
+		Money -= amount;
+		owner.Money += amount;
+	}
+	
 }

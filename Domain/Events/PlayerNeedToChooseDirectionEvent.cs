@@ -2,4 +2,4 @@
 
 namespace Domain.Events;
 
-public record PlayerNeedToChooseDirectionEvent(string PlayerId, params string[] Directions) : DomainEvent;
+public record PlayerNeedToChooseDirectionEvent(string PlayerId, params Direction[] Directions) : DomainEvent;

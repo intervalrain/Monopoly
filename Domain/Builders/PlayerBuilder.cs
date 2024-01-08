@@ -34,10 +34,10 @@ public class PlayerBuilder
 		return this;
 	}
 
-	public PlayerBuilder WithPosition(string blockId, string direction)
+	public PlayerBuilder WithPosition(string blockId, Direction direction)
 	{
-		BlockId = BlockId;
-		CurrentDirection = Enum.Parse<Direction>(direction);
+		BlockId = blockId;
+		CurrentDirection = direction;
 		return this;
 	}
 

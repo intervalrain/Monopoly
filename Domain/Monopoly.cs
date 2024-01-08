@@ -62,11 +62,27 @@ public class Monopoly : AbstractAggregationRoot
 		CurrentPlayer.StartRound();
 	}
 
+	public void PlayerRollDice(string playerId)
+	{
+		Player player = GetPlayer(playerId);
+		VerifyCurrentPlayer(player);
+		var events = player.RollDice(_map, Dices).ToArray();
+		this.AddDomainEvents(events);
+	}
+
     #region Private Functions 
     private Player GetPlayer(string id)
 	{
 		var player = _players.Find(p => p.Id == id) ?? throw new Exception("找不到玩家");
 		return player; 
+	}
+
+	private void VerifyCurrentPlayer(Player? player)
+	{
+		if (player != CurrentPlayer)
+		{
+			throw new Exception("不是該玩家的回合");
+		}
 	}
     #endregion
 }

@@ -20,6 +20,14 @@ public abstract class AbstractAggregationRoot
         domainEvents.Add(domainEvent);
     }
 
+    public void AddDomainEvents(params DomainEvent[] domainEvents)
+    {
+        foreach (var e in domainEvents)
+        {
+            AddDomainEvent(e);
+        }
+    }
+
     public void AddDomainEvent(IEnumerable<DomainEvent> domainEvents)
     {
         this.domainEvents.AddRange(domainEvents.TakeWhile(x => x != DomainEvent.EmptyEvent));
